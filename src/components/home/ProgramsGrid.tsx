@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, GraduationCap, Stethoscope, Briefcase, ArrowRight } from "lucide-react";
+import { AlertTriangle, GraduationCap, Stethoscope, Briefcase, ArrowRight, Star } from "lucide-react";
 
 const programs = [
   {
@@ -10,8 +9,9 @@ const programs = [
     description:
       "Rapid response to natural disasters, monthly ration drives for widows and orphans, and essential support during crises.",
     href: "/programs#relief",
-    color: "text-destructive",
-    bgColor: "bg-destructive/10",
+    gradient: "from-destructive/10 to-destructive/5",
+    iconBg: "bg-destructive/15",
+    iconColor: "text-destructive",
   },
   {
     icon: GraduationCap,
@@ -19,8 +19,9 @@ const programs = [
     description:
       "IT classes for Huffaz, Taekwondo training, and uniform distribution for government school students.",
     href: "/programs#education",
-    color: "text-trust",
-    bgColor: "bg-trust/10",
+    gradient: "from-secondary/10 to-secondary/5",
+    iconBg: "bg-secondary/15",
+    iconColor: "text-secondary",
   },
   {
     icon: Stethoscope,
@@ -28,8 +29,9 @@ const programs = [
     description:
       "Free eye camps with specialist teams, blood donation drives, and emergency ward support for patients.",
     href: "/programs#healthcare",
-    color: "text-primary",
-    bgColor: "bg-primary/10",
+    gradient: "from-primary/10 to-primary/5",
+    iconBg: "bg-primary/15",
+    iconColor: "text-primary",
   },
   {
     icon: Briefcase,
@@ -37,50 +39,66 @@ const programs = [
     description:
       "Sewing machine programs for women empowerment and skills training for sustainable income generation.",
     href: "/programs#livelihood",
-    color: "text-secondary",
-    bgColor: "bg-secondary/10",
+    gradient: "from-trust/10 to-trust/5",
+    iconBg: "bg-trust/15",
+    iconColor: "text-trust",
   },
 ];
 
 const ProgramsGrid = () => {
   return (
-    <section className="py-16 md:py-24">
-      <div className="container">
+    <section className="relative py-20 md:py-28">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 pattern-islamic opacity-50" />
+      
+      <div className="container relative">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <Star className="h-5 w-5 fill-secondary text-secondary" />
+            <span className="text-sm font-medium uppercase tracking-wider text-secondary">
+              What We Do
+            </span>
+            <Star className="h-5 w-5 fill-secondary text-secondary" />
+          </div>
+          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
             Our Core Programs
           </h2>
-          <p className="mt-4 text-muted-foreground">
+          <p className="mt-4 text-lg text-muted-foreground">
             Comprehensive support across education, healthcare, emergency relief, and sustainable
             livelihood development
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:gap-8">
           {programs.map((program, index) => (
-            <Card
+            <div
               key={index}
-              className="group border-border/50 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className={`group relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br ${program.gradient} p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
             >
-              <CardContent className="flex flex-col p-6">
+              {/* Decorative corner */}
+              <div className="absolute -right-4 -top-4 opacity-10">
+                <Star className="h-24 w-24 text-primary" />
+              </div>
+              
+              <div className="relative">
                 <div
-                  className={`mb-4 flex h-14 w-14 items-center justify-center rounded-xl ${program.bgColor}`}
+                  className={`mb-5 inline-flex h-16 w-16 items-center justify-center rounded-2xl ${program.iconBg} transition-transform group-hover:scale-110`}
                 >
-                  <program.icon className={`h-7 w-7 ${program.color}`} />
+                  <program.icon className={`h-8 w-8 ${program.iconColor}`} />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">{program.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-muted-foreground">{program.description}</p>
-                <Link to={program.href} className="mt-4">
+                <h3 className="text-xl font-bold text-foreground md:text-2xl">{program.title}</h3>
+                <p className="mt-3 text-muted-foreground leading-relaxed">{program.description}</p>
+                <Link to={program.href} className="mt-6 inline-block">
                   <Button
                     variant="ghost"
-                    className="group/btn -ml-4 gap-2 text-primary hover:text-primary"
+                    className="group/btn -ml-4 gap-2 text-primary hover:bg-primary/10 hover:text-primary"
                   >
                     Learn More
                     <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                   </Button>
                 </Link>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>
