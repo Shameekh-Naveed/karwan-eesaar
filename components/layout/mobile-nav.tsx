@@ -28,15 +28,19 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="right" className="w-[300px] overflow-y-auto">
         <SheetHeader>
-          <SheetTitle className="flex items-center gap-2 font-heading">
-            <Image
-              src="/eesaar-logo.jpg"
-              alt={`${siteConfig.name} logo`}
-              width={32}
-              height={32}
-              className="h-8 w-8 rounded-md object-contain"
-            />
-            {siteConfig.name}
+          <SheetTitle className="text-left font-heading">
+            <span className="flex items-start gap-2 pr-2">
+              <Image
+                src="/eesaar-logo.jpg"
+                alt={`${siteConfig.name} logo`}
+                width={32}
+                height={32}
+                className="mt-0.5 h-8 w-8 shrink-0 rounded-md object-contain"
+              />
+              <span className="text-sm font-semibold leading-snug">
+                {siteConfig.name}
+              </span>
+            </span>
           </SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col gap-1 px-4">

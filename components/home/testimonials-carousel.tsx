@@ -19,7 +19,7 @@ export function TestimonialsCarousel() {
     <SectionWrapper variant="alt">
       <SectionHeading
         title="Stories of Impact"
-        subtitle="Hear from the people whose lives have been touched by Eesaar Foundation."
+        subtitle="Hear from the people whose lives have been touched by Karwan-e-Eesaar Welfare Organization."
       />
       <div className="mx-auto max-w-5xl">
         <Carousel

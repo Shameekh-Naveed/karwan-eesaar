@@ -8,9 +8,9 @@ export const visionMission = {
 export const ourStory = {
   title: "Our Story",
   paragraphs: [
-    "Eesaar Foundation was born from a simple belief: that every person deserves a chance to live with dignity. Founded by a group of passionate young professionals, we started with a single mission — to serve those who need it most.",
+    "Karwan-e-Eesaar Welfare Organization was born from a simple belief: that every person deserves a chance to live with dignity. Founded by a group of passionate young professionals, we started with a single mission — to serve those who need it most.",
     "What began as small relief efforts has grown into a comprehensive community welfare organization supporting hundreds of families across Pakistan. From flood relief to IT education, from eye camps to winter care — our journey has been fueled by the generosity of our donors and the dedication of our volunteers.",
-    "Rooted in Islamic principles of service and charity, Eesaar Foundation operates with full transparency and accountability. Every donation is tracked, every program is measured, and every beneficiary is treated with the utmost respect and dignity.",
+    "Rooted in Islamic principles of service and charity, Karwan-e-Eesaar Welfare Organization operates with full transparency and accountability. Every donation is tracked, every program is measured, and every beneficiary is treated with the utmost respect and dignity.",
   ],
 } as const;
 

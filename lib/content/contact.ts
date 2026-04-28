@@ -1,13 +1,13 @@
 export const faqItems = [
   {
-    question: "How can I donate to Eesaar Foundation?",
+    question: "How can I donate to Karwan-e-Eesaar Welfare Organization?",
     answer:
       "You can donate via WhatsApp by clicking the Donate button on our website. We accept bank transfers and mobile payments. Our team will guide you through the process.",
   },
   {
     question: "Is my donation tax-deductible?",
     answer:
-      "Eesaar Foundation is a registered non-profit organization. We provide donation receipts that can be used for tax purposes where applicable.",
+      "Karwan-e-Eesaar Welfare Organization is a registered non-profit organization. We provide donation receipts that can be used for tax purposes where applicable.",
   },
   {
     question: "How do I become a volunteer?",
@@ -15,7 +15,7 @@ export const faqItems = [
       "Simply reach out to us via WhatsApp or fill out the contact form on this page. Our volunteer coordinator will get in touch with you to discuss opportunities that match your skills and availability.",
   },
   {
-    question: "Where does Eesaar Foundation operate?",
+    question: "Where does Karwan-e-Eesaar Welfare Organization operate?",
     answer:
       "We currently operate in over 50 communities across Punjab, Sindh, and Khyber Pakhtunkhwa provinces of Pakistan.",
   },
@@ -25,7 +25,7 @@ export const faqItems = [
       "We maintain full transparency in fund allocation. On average, 85% of donations go directly to program delivery, 10% to operations, and 5% to administration. Detailed reports are shared with donors regularly.",
   },
   {
-    question: "Can I visit Eesaar Foundation's projects?",
+    question: "Can I visit Karwan-e-Eesaar Welfare Organization's projects?",
     answer:
       "Absolutely! We welcome donors and supporters to visit our projects. Please contact us to arrange a field visit at a convenient time.",
   },

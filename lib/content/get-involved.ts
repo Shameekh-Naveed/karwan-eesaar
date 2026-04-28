@@ -22,7 +22,7 @@ export const donateSection = {
     { name: "EasyPaisa", detail: "Send to our registered number" },
   ],
   transparencyNote:
-    "Eesaar Foundation is a registered non-profit. We provide donation receipts and maintain full transparency in fund allocation. 85% of donations go directly to program delivery.",
+    "Karwan-e-Eesaar Welfare Organization is a registered non-profit. We provide donation receipts and maintain full transparency in fund allocation. 85% of donations go directly to program delivery.",
 };
 
 export const volunteerSection = {

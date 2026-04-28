@@ -7,7 +7,7 @@ import { winterRelief } from "@/lib/content/programs";
 export const metadata: Metadata = {
   title: "Winter Relief Programs",
   description:
-    "Eesaar Foundation's winter relief: blankets, warm clothing, and essentials for SOS children, old age homes, and vulnerable families in Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's winter relief: blankets, warm clothing, and essentials for SOS children, old age homes, and vulnerable families in Pakistan.",
 };
 
 export default function WinterReliefPage() {

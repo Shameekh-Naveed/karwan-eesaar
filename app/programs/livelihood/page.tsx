@@ -7,7 +7,7 @@ import { livelihood } from "@/lib/content/programs";
 export const metadata: Metadata = {
   title: "Livelihood & Women Empowerment",
   description:
-    "Eesaar Foundation's livelihood programs: sewing machine support, skills training, and women empowerment initiatives in Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's livelihood programs: sewing machine support, skills training, and women empowerment initiatives in Pakistan.",
 };
 
 export default function LivelihoodPage() {

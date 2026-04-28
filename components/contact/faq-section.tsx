@@ -13,7 +13,7 @@ export function FaqSection() {
     <SectionWrapper variant="alt">
       <SectionHeading
         title="Frequently Asked Questions"
-        subtitle="Find answers to common questions about Eesaar Foundation."
+        subtitle="Find answers to common questions about Karwan-e-Eesaar Welfare Organization."
       />
       <div className="mx-auto max-w-3xl">
         <Accordion type="single" collapsible>

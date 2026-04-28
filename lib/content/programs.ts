@@ -69,7 +69,7 @@ export const communityDrives = [
 export const emergencyRelief = {
   title: "Emergency Relief & Disaster Response",
   description:
-    "When disaster strikes, Eesaar Foundation responds. We provide immediate relief to affected families with food, shelter, clothing, and essential supplies.",
+    "When disaster strikes, Karwan-e-Eesaar Welfare Organization responds. We provide immediate relief to affected families with food, shelter, clothing, and essential supplies.",
   sections: [
     {
       title: "Flood Relief Initiatives",
@@ -77,7 +77,7 @@ export const emergencyRelief = {
         {
           title: "2022 Flood Response",
           description:
-            "During the devastating 2022 floods, Eesaar Foundation mobilized volunteers to support over 500 families with clothes, food, and essential supplies. Our teams worked tirelessly to reach affected communities in Punjab and Sindh.",
+            "During the devastating 2022 floods, Karwan-e-Eesaar Welfare Organization mobilized volunteers to support over 500 families with clothes, food, and essential supplies. Our teams worked tirelessly to reach affected communities in Punjab and Sindh.",
           stats: "500+ families supported",
         },
         {
@@ -116,7 +116,7 @@ export const emergencyRelief = {
         {
           title: "Meal Distribution for Patients & Families",
           description:
-            "In 2025, Eesaar Foundation distributed meals to 50 families of patients at local hospitals. This initiative supports families during medical emergencies when financial strain is at its highest.",
+            "In 2025, Karwan-e-Eesaar Welfare Organization distributed meals to 50 families of patients at local hospitals. This initiative supports families during medical emergencies when financial strain is at its highest.",
           stats: "50 families supported (2025)",
         },
       ],

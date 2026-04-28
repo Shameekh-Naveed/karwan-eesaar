@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Impact & Transparency",
   description:
-    "See how Eesaar Foundation uses your donations. Impact reports, success stories, and transparent fund allocation for our Pakistan-based charity programs.",
+    "See how Karwan-e-Eesaar Welfare Organization uses your donations. Impact reports, success stories, and transparent fund allocation for our Pakistan-based charity programs.",
 };
 
 export default function ImpactPage() {

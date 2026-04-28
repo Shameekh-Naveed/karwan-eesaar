@@ -13,7 +13,7 @@ import { programsOverview, programCategories, communityDrives } from "@/lib/cont
 export const metadata: Metadata = {
   title: "Programs & Services",
   description:
-    "Explore Eesaar Foundation's programs: emergency relief, education, healthcare, livelihood support, and winter relief campaigns across Pakistan.",
+    "Explore Karwan-e-Eesaar Welfare Organization's programs: emergency relief, education, healthcare, livelihood support, and winter relief campaigns across Pakistan.",
 };
 
 export default function ProgramsPage() {

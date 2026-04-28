@@ -2,7 +2,7 @@ export const heroSlides = [
   {
     title: "Empowering Communities Through Compassion",
     subtitle:
-      "Join Eesaar Foundation in building a brighter future for underprivileged communities across Pakistan.",
+      "Join Karwan-e-Eesaar Welfare Organization in building a brighter future for underprivileged communities across Pakistan.",
     ctaLabel: "Donate Now",
     ctaLink: "donate" as const,
     secondaryCtaLabel: "Become a Volunteer",
@@ -131,7 +131,7 @@ export const latestUpdates = [
   {
     title: "Cloud Burst Response in Battal",
     excerpt:
-      "Eesaar Foundation responded to the 2025 cloud burst, supporting 10+ families with crockery, blankets, and household items.",
+      "Karwan-e-Eesaar Welfare Organization responded to the 2025 cloud burst, supporting 10+ families with crockery, blankets, and household items.",
     date: "January 2025",
     tag: "Relief",
   },
@@ -154,7 +154,7 @@ export const latestUpdates = [
 export const testimonials = [
   {
     quote:
-      "Eesaar Foundation provided our family with rations during the most difficult time. Their volunteers came to our door with dignity and respect.",
+      "Karwan-e-Eesaar Welfare Organization provided our family with rations during the most difficult time. Their volunteers came to our door with dignity and respect.",
     name: "Khadija Bibi",
     role: "Ration Drive Beneficiary",
   },
@@ -166,7 +166,7 @@ export const testimonials = [
   },
   {
     quote:
-      "Volunteering with Eesaar during Ramadan blood drives has been the most rewarding experience. The team is truly dedicated.",
+      "Volunteering with Karwan-e-Eesaar Welfare Organization during Ramadan blood drives has been the most rewarding experience. The team is truly dedicated.",
     name: "Sarah Khan",
     role: "Volunteer",
   },

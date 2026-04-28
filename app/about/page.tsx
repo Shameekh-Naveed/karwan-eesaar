@@ -10,14 +10,14 @@ import { ApproachSection } from "@/components/about/approach-section";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about Eesaar Foundation's mission, vision, values, and the dedicated team working to empower communities across Pakistan through compassion and service.",
+    "Learn about Karwan-e-Eesaar Welfare Organization's mission, vision, values, and the dedicated team working to empower communities across Pakistan through compassion and service.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <PageHero
-        title="About Eesaar Foundation"
+        title="About Karwan-e-Eesaar Welfare Organization"
         description="Rooted in Islamic principles of compassion and service, we work to empower underprivileged communities across Pakistan."
       />
       <Breadcrumbs items={[{ label: "About Us" }]} />

@@ -12,7 +12,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { heroSlides } from "@/lib/content/home";
-import { getWhatsAppLink } from "@/lib/site-config";
+import { getWhatsAppLink, siteConfig } from "@/lib/site-config";
 
 export function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -34,6 +34,11 @@ export function HeroCarousel() {
 
   return (
     <section className="relative overflow-hidden">
+      <div className="relative z-20 border-b border-white/15 bg-black/25 px-4 py-3 text-center backdrop-blur-sm md:py-3.5">
+        <p className="mx-auto max-w-4xl text-sm font-semibold leading-snug text-white md:text-base">
+          {siteConfig.name}
+        </p>
+      </div>
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
@@ -67,7 +72,7 @@ export function HeroCarousel() {
                     >
                       <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                       {index === 0
-                        ? "Eesaar Foundation"
+                        ? "Who We Are"
                         : index === 1
                           ? "Disaster Response"
                           : index === 2

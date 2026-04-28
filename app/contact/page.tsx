@@ -11,7 +11,7 @@ import { FaqSection } from "@/components/contact/faq-section";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Eesaar Foundation. Send us a message, call us, or reach out on WhatsApp for donations, volunteering, or partnerships.",
+    "Get in touch with Karwan-e-Eesaar Welfare Organization. Send us a message, call us, or reach out on WhatsApp for donations, volunteering, or partnerships.",
 };
 
 export default function ContactPage() {

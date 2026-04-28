@@ -7,7 +7,7 @@ import { emergencyRelief } from "@/lib/content/programs";
 export const metadata: Metadata = {
   title: "Emergency Relief & Disaster Response",
   description:
-    "Eesaar Foundation's emergency relief programs: flood relief, monthly ration drives, Qurbani distribution, and emergency patient support in Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's emergency relief programs: flood relief, monthly ration drives, Qurbani distribution, and emergency patient support in Pakistan.",
 };
 
 export default function EmergencyReliefPage() {

@@ -24,15 +24,15 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-start gap-3">
               <Image
                 src="/eesaar-logo.jpg"
                 alt={`${siteConfig.name} logo`}
                 width={40}
                 height={40}
-                className="h-10 w-10 rounded-lg bg-white/10 object-contain"
+                className="mt-0.5 h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain"
               />
-              <span className="font-heading text-lg font-bold text-white">
+              <span className="font-heading text-lg font-bold leading-snug text-white">
                 {siteConfig.name}
               </span>
             </Link>

@@ -27,7 +27,7 @@ import {
 export const metadata: Metadata = {
   title: "Get Involved",
   description:
-    "Join Eesaar Foundation — donate, volunteer, or partner with us to make a difference in communities across Pakistan.",
+    "Join Karwan-e-Eesaar Welfare Organization — donate, volunteer, or partner with us to make a difference in communities across Pakistan.",
 };
 
 const paymentIcons = {

@@ -3,7 +3,7 @@ export const blogPosts = [
     slug: "cloud-burst-response-battal-2025",
     title: "Cloud Burst Response in Battal",
     excerpt:
-      "Eesaar Foundation responded swiftly to the 2025 cloud burst in Battal, supporting 10+ affected families with essential household items.",
+      "Karwan-e-Eesaar Welfare Organization responded swiftly to the 2025 cloud burst in Battal, supporting 10+ affected families with essential household items.",
     date: "January 15, 2025",
     tag: "Relief",
     content:
@@ -37,7 +37,7 @@ export const blogPosts = [
     date: "March 25, 2024",
     tag: "Healthcare",
     content:
-      "During the blessed month of Ramadan 2024, Eesaar Foundation organized a blood donation camp at the local mosque. The response was overwhelming — 50 donors came forward in a single day. In partnership with local blood banks, all donations were processed and made available to patients in need.",
+      "During the blessed month of Ramadan 2024, Karwan-e-Eesaar Welfare Organization organized a blood donation camp at the local mosque. The response was overwhelming — 50 donors came forward in a single day. In partnership with local blood banks, all donations were processed and made available to patients in need.",
   },
   {
     slug: "importance-of-sadaqah",
@@ -47,7 +47,7 @@ export const blogPosts = [
     date: "February 10, 2024",
     tag: "Insights",
     content:
-      "Sadaqah, voluntary charity in Islam, holds immense spiritual and social significance. The Prophet Muhammad (peace be upon him) taught that even a smile is Sadaqah. At Eesaar Foundation, we facilitate various forms of Sadaqah — from monetary donations to volunteering time and skills. Every contribution, no matter how small, creates ripples of positive change in communities.",
+      "Sadaqah, voluntary charity in Islam, holds immense spiritual and social significance. The Prophet Muhammad (peace be upon him) taught that even a smile is Sadaqah. At Karwan-e-Eesaar Welfare Organization, we facilitate various forms of Sadaqah — from monetary donations to volunteering time and skills. Every contribution, no matter how small, creates ripples of positive change in communities.",
   },
   {
     slug: "uniform-distribution-2023",

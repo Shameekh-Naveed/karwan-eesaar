@@ -12,7 +12,7 @@ import { blogPosts } from "@/lib/content/blog";
 export const metadata: Metadata = {
   title: "Blog & Updates",
   description:
-    "Latest news, stories, and updates from Eesaar Foundation. Read about our programs, impact, and community initiatives in Pakistan.",
+    "Latest news, stories, and updates from Karwan-e-Eesaar Welfare Organization. Read about our programs, impact, and community initiatives in Pakistan.",
 };
 
 export default function BlogPage() {

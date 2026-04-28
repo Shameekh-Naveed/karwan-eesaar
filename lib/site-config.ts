@@ -1,16 +1,17 @@
 export const siteConfig = {
-  name: "Eesaar Foundation",
+  name: "Karwan-e-Eesaar Welfare Organization",
   tagline: "Empowering Communities, Transforming Lives",
   description:
-    "Eesaar Foundation is a Pakistani charitable organization dedicated to education, healthcare, and community development. Join us in making a difference.",
+    "Karwan-e-Eesaar Welfare Organization is a Pakistani charitable organization dedicated to education, healthcare, and community development. Join us in making a difference.",
   url: "https://eesaar.org",
   whatsapp: {
     number: "923001234567",
     donateMessage:
-      "Hello! I would like to make a donation to Eesaar Foundation.",
+      "Hello! I would like to make a donation to Karwan-e-Eesaar Welfare Organization.",
     volunteerMessage:
-      "Hello! I would like to volunteer with Eesaar Foundation.",
-    generalMessage: "Hello! I would like to learn more about Eesaar Foundation.",
+      "Hello! I would like to volunteer with Karwan-e-Eesaar Welfare Organization.",
+    generalMessage:
+      "Hello! I would like to learn more about Karwan-e-Eesaar Welfare Organization.",
   },
   contact: {
     email: "info@eesaar.org",

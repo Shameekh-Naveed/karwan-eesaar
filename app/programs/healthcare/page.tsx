@@ -7,7 +7,7 @@ import { healthcare } from "@/lib/content/programs";
 export const metadata: Metadata = {
   title: "Healthcare Initiatives",
   description:
-    "Eesaar Foundation's healthcare programs: free eye camps, blood donation drives, and emergency ward support for communities in Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's healthcare programs: free eye camps, blood donation drives, and emergency ward support for communities in Pakistan.",
 };
 
 export default function HealthcarePage() {

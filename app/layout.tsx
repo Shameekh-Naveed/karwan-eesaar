@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "NGO Pakistan",
     "charity organization Pakistan",
     "community welfare Pakistan",
-    "Eesaar Foundation",
+    "Karwan-e-Eesaar Welfare Organization",
     "donate Pakistan",
     "volunteer Pakistan",
     "flood relief Pakistan",

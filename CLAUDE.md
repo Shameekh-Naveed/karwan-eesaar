@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Karwan-Eesaar is a Next.js 16 web application using React 19, TypeScript (strict mode), and Tailwind CSS v4. The UI component library is built on shadcn/ui with Radix UI primitives.
+Karwan-e-Eesaar Welfare Organization (this repo) is a Next.js 16 web application using React 19, TypeScript (strict mode), and Tailwind CSS v4. The UI component library is built on shadcn/ui with Radix UI primitives.
 
 ## Commands
 

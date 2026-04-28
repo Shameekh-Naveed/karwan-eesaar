@@ -7,7 +7,7 @@ import { education } from "@/lib/content/programs";
 export const metadata: Metadata = {
   title: "Education & Skill Development",
   description:
-    "Eesaar Foundation's education programs: IT classes for Huffaz, Taekwondo training, and school uniform distribution drives in Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's education programs: IT classes for Huffaz, Taekwondo training, and school uniform distribution drives in Pakistan.",
 };
 
 export default function EducationPage() {
