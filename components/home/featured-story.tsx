@@ -1,33 +1,34 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
+import { PhotoFrame } from "@/components/shared/photo-frame";
 import { featuredStory } from "@/lib/content/home";
-import { photos } from "@/lib/content/photos";
-import { cn } from "@/lib/utils";
 
 export function FeaturedStory() {
-  const photo = photos.story;
-
   return (
     <SectionWrapper>
-      <div
-        className={cn(
-          "mx-auto grid items-center gap-8 md:gap-14",
-          photo ? "max-w-5xl md:grid-cols-2" : "max-w-3xl text-center"
-        )}
-      >
-        {photo && (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        )}
+      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+        {/* One large photo over two small ones */}
+        <div className="grid grid-cols-2 gap-3">
+          <PhotoFrame
+            slot="home-story"
+            alt="Volunteers delivering relief in Battal after the cloud burst"
+            className="col-span-2 aspect-[16/10]"
+            sizes="(min-width: 1024px) 55vw, 100vw"
+          />
+          <PhotoFrame
+            slot="home-story-2"
+            alt="Blankets and household items being unloaded"
+            className="aspect-square rounded-2xl"
+            sizes="(min-width: 1024px) 27vw, 50vw"
+          />
+          <PhotoFrame
+            slot="home-story-3"
+            alt="A family receiving relief supplies"
+            className="aspect-square rounded-2xl"
+            sizes="(min-width: 1024px) 27vw, 50vw"
+          />
+        </div>
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary">
             {featuredStory.eyebrow}

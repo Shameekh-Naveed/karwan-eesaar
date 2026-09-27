@@ -1,14 +1,10 @@
-import Image from "next/image";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
+import { PhotoFrame } from "@/components/shared/photo-frame";
 import { ourStory } from "@/lib/content/about";
 import { pendingFacts } from "@/lib/content/facts";
-import { photos } from "@/lib/content/photos";
 import { siteConfig } from "@/lib/site-config";
-import { cn } from "@/lib/utils";
 
 export function OurStory() {
-  const photo = photos.about;
-
   // Hard trust signals; each appears only once it has been confirmed
   const trustFacts = [
     pendingFacts.foundedYear && { label: "Founded", value: String(pendingFacts.foundedYear) },
@@ -19,12 +15,7 @@ export function OurStory() {
 
   return (
     <SectionWrapper variant="alt">
-      <div
-        className={cn(
-          "mx-auto grid items-center gap-10 md:gap-14",
-          photo ? "max-w-6xl md:grid-cols-2" : "max-w-3xl"
-        )}
-      >
+      <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-14">
         <div>
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{ourStory.title}</h2>
           <div className="mt-5 space-y-4">
@@ -48,17 +39,12 @@ export function OurStory() {
           </dl>
         </div>
 
-        {photo && (
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="(min-width: 768px) 45vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        )}
+        <PhotoFrame
+          slot="about-story"
+          alt="Karwan-e-Eesaar volunteers at a ration drive in Mansehra"
+          className="aspect-[4/3] md:order-first md:aspect-square"
+          sizes="(min-width: 768px) 45vw, 100vw"
+        />
       </div>
     </SectionWrapper>
   );

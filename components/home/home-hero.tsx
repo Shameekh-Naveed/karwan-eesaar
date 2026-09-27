@@ -1,46 +1,27 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PhotoFrame } from "@/components/shared/photo-frame";
 import { SandSwoosh } from "@/components/shared/sand-swoosh";
 import { hero } from "@/lib/content/home";
-import { photos } from "@/lib/content/photos";
-import { cn } from "@/lib/utils";
 
 export function HomeHero() {
-  const photo = photos.hero;
-
   return (
     <section className="bg-navy-glow relative overflow-hidden">
-      <div
-        className={cn(
-          "container mx-auto grid items-center gap-10 px-6 pb-28 pt-14 md:px-8 md:pb-36 md:pt-20",
-          photo && "lg:grid-cols-[1.1fr_1fr] lg:gap-16"
-        )}
-      >
-        <div className={cn(!photo && "mx-auto max-w-4xl text-center")}>
-          <h1 className="text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-primary-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+      <div className="container mx-auto grid items-center gap-10 px-6 pb-28 pt-12 md:px-8 md:pb-36 md:pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+        <div className="text-center lg:text-left">
+          <h1 className="text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-primary-foreground sm:text-5xl md:text-6xl">
             {hero.title}
           </h1>
-          <p
-            className={cn(
-              "mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/80 md:text-xl",
-              !photo && "mx-auto"
-            )}
-          >
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/80 md:text-xl lg:mx-0">
             {hero.subtitle}
           </p>
-          <div
-            className={cn(
-              "mt-10 flex flex-col items-center gap-5 sm:flex-row",
-              !photo && "sm:justify-center"
-            )}
-          >
+          <div className="mt-10 flex flex-col items-center gap-5 sm:flex-row sm:justify-center lg:justify-start">
             <Button
               asChild
               variant="donate"
               size="lg"
-              className="h-14 w-full max-w-xs rounded-xl px-10 text-lg font-bold shadow-lg shadow-black/25 sm:w-auto"
+              className="h-14 w-full max-w-xs rounded-xl px-10 text-lg shadow-lg shadow-black/25 sm:w-auto"
             >
               <Link href="/get-involved#donate">
                 <Heart className="size-5" />
@@ -57,18 +38,14 @@ export function HomeHero() {
           </div>
         </div>
 
-        {photo && (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-[4/5]">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        )}
+        <PhotoFrame
+          slot="home-hero"
+          alt="A volunteer handing a ration pack to a family"
+          className="aspect-[4/3] w-full lg:aspect-[4/5]"
+          sizes="(min-width: 1024px) 45vw, 100vw"
+          priority
+          onDark
+        />
       </div>
       <SandSwoosh />
     </section>
