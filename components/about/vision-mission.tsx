@@ -1,38 +1,21 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { visionMission } from "@/lib/content/about";
-import { Eye, Target } from "lucide-react";
 
 export function VisionMission() {
+  const items = [
+    { title: "Our vision", text: visionMission.vision },
+    { title: "Our mission", text: visionMission.mission },
+  ];
+
   return (
-    <SectionWrapper id="vision-mission">
-      <div className="grid gap-8 md:grid-cols-2">
-        <Card className="border-0 bg-primary/5 shadow-sm">
-          <CardContent className="p-8">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Eye className="size-6" />
-            </div>
-            <h2 className="mb-4 text-2xl font-bold text-foreground">
-              Our Vision
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {visionMission.vision}
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="border-0 bg-secondary/5 shadow-sm">
-          <CardContent className="p-8">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary">
-              <Target className="size-6" />
-            </div>
-            <h2 className="mb-4 text-2xl font-bold text-foreground">
-              Our Mission
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {visionMission.mission}
-            </p>
-          </CardContent>
-        </Card>
+    <SectionWrapper id="vision-mission" className="py-12 md:py-16">
+      <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-2 md:gap-6">
+        {items.map((item) => (
+          <div key={item.title} className="rounded-2xl bg-muted p-6 md:p-8">
+            <h2 className="text-2xl font-bold text-foreground">{item.title}</h2>
+            <p className="mt-3 text-lg leading-relaxed text-foreground/80">{item.text}</p>
+          </div>
+        ))}
       </div>
     </SectionWrapper>
   );

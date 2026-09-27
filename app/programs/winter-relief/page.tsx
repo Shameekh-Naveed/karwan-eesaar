@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHero } from "@/components/shared/page-hero";
 import { ProgramDetail } from "@/components/programs/program-detail";
+import { photos } from "@/lib/content/photos";
 import { winterRelief } from "@/lib/content/programs";
 
 export const metadata: Metadata = {
@@ -16,16 +16,11 @@ export default function WinterReliefPage() {
       <PageHero
         title={winterRelief.title}
         description={winterRelief.description}
-      />
-      <Breadcrumbs
-        items={[
-          { label: "Programs", href: "/programs" },
-          { label: "Winter Relief" },
-        ]}
-      />
+      />
       <ProgramDetail
         sections={winterRelief.sections}
         ctaLabel={winterRelief.ctaLabel}
+        photo={photos.winterRelief}
       />
     </>
   );

@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
+import { DonateBand } from "@/components/shared/donate-band";
+import type { Photo } from "@/lib/content/photos";
 
 interface ProgramItem {
   title: string;
@@ -19,63 +17,53 @@ interface ProgramSection {
 interface ProgramDetailProps {
   sections: readonly ProgramSection[];
   ctaLabel: string;
+  photo?: Photo | null;
 }
 
-export function ProgramDetail({ sections, ctaLabel }: ProgramDetailProps) {
+export function ProgramDetail({ sections, ctaLabel, photo }: ProgramDetailProps) {
   return (
     <>
+      {photo && (
+        <div className="container mx-auto px-4 pt-10 md:px-6">
+          <div className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden rounded-3xl">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 64rem, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      )}
+
       {sections.map((section, sIndex) => (
         <SectionWrapper
           key={section.title}
           variant={sIndex % 2 === 0 ? "default" : "alt"}
+          className="py-12 md:py-16"
         >
-          <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            {section.title}
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {section.items.map((item) => (
-              <Card
-                key={item.title}
-                className="border-0 shadow-sm transition-shadow hover:shadow-md"
-              >
-                <CardContent className="p-6 md:p-8">
-                  <Badge
-                    variant="secondary"
-                    className="mb-4 bg-secondary/10 text-secondary"
-                  >
-                    {item.stats}
-                  </Badge>
-                  <h3 className="mb-3 text-lg font-semibold text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="leading-relaxed text-muted-foreground">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              {section.title}
+            </h2>
+            <div className="grid gap-8 md:grid-cols-2 md:gap-12">
+              {section.items.map((item) => (
+                <div key={item.title}>
+                  <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-1 text-sm font-semibold text-secondary">{item.stats}</p>
+                  <p className="mt-3 text-lg leading-relaxed text-foreground/80">
                     {item.description}
                   </p>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         </SectionWrapper>
       ))}
 
-      {/* CTA Section */}
-      <SectionWrapper variant="dark" className="bg-navy-glow">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-8 text-3xl font-extrabold uppercase tracking-tight md:text-4xl">
-            Make a difference today
-          </h2>
-          <Button
-            asChild
-            size="lg"
-            className="h-12 rounded-xl bg-gold px-8 text-base font-bold text-gold-foreground hover:bg-gold/90"
-          >
-            <Link href="/get-involved#donate">
-              {ctaLabel}
-              <ArrowRight className="ml-1 size-4" />
-            </Link>
-          </Button>
-        </div>
-      </SectionWrapper>
+      <DonateBand label={ctaLabel} />
     </>
   );
 }

@@ -5,12 +5,7 @@ const { easypaisa, bank } = siteConfig.donation;
 export const faqItems = [
   {
     question: "How can I donate to Karwan-e-Eesaar Welfare Organization?",
-    answer: `Send to Easypaisa ${easypaisa.number} or ${bank.bankName} account ${bank.accountNumber} (title: ${bank.accountTitle}), then message us on WhatsApp so we can confirm and send a receipt.`,
-  },
-  {
-    question: "Is my donation tax-deductible?",
-    answer:
-      "Karwan-e-Eesaar Welfare Organization is a registered non-profit organization. We provide donation receipts that can be used for tax purposes where applicable.",
+    answer: `Send to Easypaisa ${easypaisa.number} or ${bank.bankName} account ${bank.accountNumber} (title: ${bank.accountTitle}), then message us on WhatsApp so we can confirm we received it.`,
   },
   {
     question: "How do I become a volunteer?",
@@ -23,9 +18,9 @@ export const faqItems = [
       "We are based on Old College Road, Mansehra, and run drives in surrounding communities, with relief work further afield when disasters strike.",
   },
   {
-    question: "How is my donation used?",
+    question: "How do I know my donation arrived?",
     answer:
-      "We maintain full transparency in fund allocation. On average, 85% of donations go directly to program delivery, 10% to operations, and 5% to administration. Detailed reports are shared with donors regularly.",
+      "Message us on WhatsApp after you send it and we'll confirm we received it.",
   },
   {
     question: "Can I visit Karwan-e-Eesaar Welfare Organization's projects?",

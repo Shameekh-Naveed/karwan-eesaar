@@ -1,94 +1,55 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
-import { SectionHeading } from "@/components/shared/section-heading";
+import { DonateBand } from "@/components/shared/donate-band";
 import { IconBox, type IconName } from "@/components/shared/icon-box";
-import { programsOverview, programCategories, communityDrives } from "@/lib/content/programs";
+import {
+  programsOverview,
+  programCategories,
+  communityDrivesNote,
+} from "@/lib/content/programs";
 
 export const metadata: Metadata = {
-  title: "Programs & Services",
+  title: "Programs",
   description:
-    "Explore Karwan-e-Eesaar Welfare Organization's programs: emergency relief, education, healthcare, livelihood support, and winter relief campaigns across Pakistan.",
+    "Karwan-e-Eesaar Welfare Organization's programs: emergency relief and monthly rations, education, healthcare, livelihood support and winter relief.",
 };
 
 export default function ProgramsPage() {
   return (
     <>
-      <PageHero
-        title={programsOverview.title}
-        description={programsOverview.subtitle}
-      />
-      <Breadcrumbs items={[{ label: "Programs" }]} />
+      <PageHero title={programsOverview.title} description={programsOverview.subtitle} />
 
-      <SectionWrapper>
-        <SectionHeading
-          title="Our Program Areas"
-          subtitle="Click on any program to learn more about our initiatives and how you can contribute."
-        />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <SectionWrapper className="py-12 md:py-16">
+        <ul className="mx-auto max-w-3xl divide-y divide-border border-y">
           {programCategories.map((program) => (
-            <Link
-              key={program.title}
-              href={program.href}
-              className="group"
-            >
-              <Card className="h-full border-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary/10">
-                <CardContent className="p-7">
-                  <div className="mb-5">
-                    <IconBox
-                      icon={program.icon as IconName}
-                      size="lg"
-                      className="transition-colors group-hover:bg-secondary/15 group-hover:text-secondary"
-                    />
-                  </div>
-                  <Badge
-                    variant="secondary"
-                    className="mb-3 bg-secondary/10 text-secondary"
-                  >
-                    {program.stats}
-                  </Badge>
-                  <h3 className="mb-2 text-lg font-semibold text-foreground">
+            <li key={program.title}>
+              <Link
+                href={program.href}
+                className="group flex items-center gap-5 py-6 transition-colors hover:bg-muted/60 sm:px-4"
+              >
+                <IconBox icon={program.icon as IconName} size="lg" />
+                <span className="flex-1">
+                  <span className="block text-xl font-bold text-foreground">
                     {program.title}
-                  </h3>
-                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-                    {program.description}
-                  </p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-secondary transition-all group-hover:gap-2">
-                    Learn More <ArrowRight className="size-3.5" />
                   </span>
-                </CardContent>
-              </Card>
-            </Link>
+                  <span className="mt-1 block text-lg text-foreground/75">
+                    {program.description}
+                  </span>
+                </span>
+                <ArrowRight className="size-5 shrink-0 text-secondary transition-transform duration-200 ease-out group-hover:translate-x-1" />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-foreground/75">
+          {communityDrivesNote}
+        </p>
       </SectionWrapper>
 
-      {/* Community Drives Section */}
-      <SectionWrapper variant="alt">
-        <SectionHeading
-          title="Community Support Drives"
-          subtitle="Beyond our core programs, we organize community-level initiatives that bring people together."
-        />
-        <div className="grid gap-6 md:grid-cols-3">
-          {communityDrives.map((drive) => (
-            <Card key={drive.title} className="border-0 shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="mb-2 text-lg font-semibold text-foreground">
-                  {drive.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {drive.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </SectionWrapper>
+      <DonateBand />
     </>
   );
 }

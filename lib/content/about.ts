@@ -1,110 +1,53 @@
+import { facts } from "@/lib/content/facts";
+
 export const visionMission = {
   vision:
-    "A Pakistan where every individual, regardless of their socioeconomic background, has access to quality education, healthcare, and opportunities to thrive with dignity.",
+    "A Pakistan where every family, whatever its circumstances, can live with dignity: fed, schooled and cared for.",
   mission:
-    "To empower underprivileged communities through sustainable programs in education, healthcare, emergency relief, and livelihood support — driven by Islamic principles of compassion, transparency, and the collective power of giving.",
+    "To reach families in need with food, education, healthcare and emergency relief, guided by the Islamic spirit of eesaar: putting others before ourselves.",
 } as const;
 
 export const ourStory = {
-  title: "Our Story",
+  title: "Our story",
   paragraphs: [
-    "Karwan-e-Eesaar Welfare Organization was born from a simple belief: that every person deserves a chance to live with dignity. Founded by a group of passionate young professionals, we started with a single mission — to serve those who need it most.",
-    "What began as small relief efforts has grown into a comprehensive community welfare organization supporting hundreds of families across Pakistan. From flood relief to IT education, from eye camps to winter care — our journey has been fueled by the generosity of our donors and the dedication of our volunteers.",
-    "Rooted in Islamic principles of service and charity, Karwan-e-Eesaar Welfare Organization operates with full transparency and accountability. Every donation is tracked, every program is measured, and every beneficiary is treated with the utmost respect and dignity.",
+    "Karwan-e-Eesaar is a welfare organization based on Old College Road, Mansehra. It began with small relief efforts by people who wanted to help their neighbours.",
+    `Today we run a monthly ration drive for ${facts.rationFamiliesMonthly}+ families, free eye camps, IT classes for Huffaz, and relief whenever disaster strikes.`,
   ],
+  values: ["Compassion", "Transparency", "Dignity"],
 } as const;
 
-export const ourValues = [
+export const timeline = [
   {
-    icon: "Heart" as const,
-    title: "Compassion",
-    description:
-      "We lead with empathy, treating every individual with kindness and respect, following the Islamic principle of mercy.",
+    year: "2025",
+    items: [
+      `Cloud burst relief in Battal: ${facts.battalFamilies2025}+ families`,
+      `Meals for ${facts.patientFamiliesFed2025} patient families`,
+      `${facts.sewingMachines2025} sewing machines donated to women`,
+      "Free eye camp",
+    ],
   },
   {
-    icon: "Eye" as const,
-    title: "Transparency",
-    description:
-      "We maintain complete openness in our finances, operations, and impact reporting. Every rupee is accounted for.",
+    year: "2024",
+    items: [
+      `Ramadan blood drive: ${facts.bloodDonorsOneDay} donors in one day`,
+      "Free eye camp with Sheikhupura specialists",
+      "Winter drive for SOS Children's Village and old age homes",
+      `Monthly rations for ${facts.rationFamiliesMonthly}+ families`,
+    ],
   },
   {
-    icon: "Users" as const,
-    title: "Community",
-    description:
-      "We believe in the power of collective action — our programs are driven by and for the communities we serve.",
-  },
-  {
-    icon: "Target" as const,
-    title: "Impact",
-    description:
-      "We focus on measurable, sustainable outcomes that create lasting change rather than temporary fixes.",
-  },
-  {
-    icon: "Shield" as const,
-    title: "Integrity",
-    description:
-      "We uphold the highest ethical standards in everything we do, honoring the trust placed in us by donors and beneficiaries.",
-  },
-  {
-    icon: "Lightbulb" as const,
-    title: "Dignity",
-    description:
-      "We ensure every beneficiary is treated with honor. Receiving support should never diminish a person's self-respect.",
+    year: "2022",
+    items: [
+      `Flood relief for ${facts.floodFamilies2022}+ families`,
+      "IT classes for Huffaz launched",
+      "Taekwondo training started",
+      "School uniform drives",
+    ],
   },
 ] as const;
 
-export const teamMembers = [
-  {
-    name: "Ali Raza",
-    role: "Founder & Chairman",
-    bio: "A social entrepreneur passionate about community welfare and Islamic principles of service.",
-  },
-  {
-    name: "Ayesha Malik",
-    role: "Programs Director",
-    bio: "Experienced in designing and implementing community development initiatives across Pakistan.",
-  },
-  {
-    name: "Hassan Javed",
-    role: "Relief Operations Lead",
-    bio: "Manages emergency relief operations and field logistics for disaster response.",
-  },
-  {
-    name: "Sana Fatima",
-    role: "Volunteer Coordinator",
-    bio: "Manages and nurtures our growing network of dedicated volunteers across all programs.",
-  },
-] as const;
-
-export const approachSteps = [
-  {
-    step: 1,
-    title: "Identify",
-    description:
-      "We work with local leaders and community members to identify those most in need of support.",
-  },
-  {
-    step: 2,
-    title: "Plan",
-    description:
-      "We design targeted programs tailored to the specific needs of each community and situation.",
-  },
-  {
-    step: 3,
-    title: "Execute",
-    description:
-      "Our trained volunteers implement programs with care, accountability, and respect for beneficiaries.",
-  },
-  {
-    step: 4,
-    title: "Measure",
-    description:
-      "We track outcomes and share transparent impact reports with all donors and stakeholders.",
-  },
-  {
-    step: 5,
-    title: "Sustain",
-    description:
-      "We build local capacity to ensure programs create lasting, self-sustaining positive change.",
-  },
-] as const;
+/**
+ * Real team members only. The section stays hidden while this is empty.
+ * TODO: names, roles (and ideally photos) from Qazi Hamza, including his own role.
+ */
+export const teamMembers: readonly { name: string; role: string }[] = [];

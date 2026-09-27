@@ -1,31 +1,26 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHero } from "@/components/shared/page-hero";
+import { DonateBand } from "@/components/shared/donate-band";
 import { VisionMission } from "@/components/about/vision-mission";
 import { OurStory } from "@/components/about/our-story";
-import { OurValues } from "@/components/about/our-values";
+import { TimelineSection } from "@/components/about/timeline-section";
 import { TeamSection } from "@/components/about/team-section";
-import { ApproachSection } from "@/components/about/approach-section";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about Karwan-e-Eesaar Welfare Organization's mission, vision, values, and the dedicated team working to empower communities across Pakistan through compassion and service.",
+    "Karwan-e-Eesaar Welfare Organization is based in Mansehra and runs monthly rations, eye camps, IT classes for Huffaz and disaster relief.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        title="About Karwan-e-Eesaar Welfare Organization"
-        description="Rooted in Islamic principles of compassion and service, we work to empower underprivileged communities across Pakistan."
-      />
-      <Breadcrumbs items={[{ label: "About Us" }]} />
-      <VisionMission />
+      <PageHero title="About us" />
       <OurStory />
-      <OurValues />
+      <VisionMission />
+      <TimelineSection />
       <TeamSection />
-      <ApproachSection />
+      <DonateBand />
     </>
   );
 }

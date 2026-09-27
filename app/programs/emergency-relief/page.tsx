@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHero } from "@/components/shared/page-hero";
 import { ProgramDetail } from "@/components/programs/program-detail";
+import { photos } from "@/lib/content/photos";
 import { emergencyRelief } from "@/lib/content/programs";
 
 export const metadata: Metadata = {
@@ -16,16 +16,11 @@ export default function EmergencyReliefPage() {
       <PageHero
         title={emergencyRelief.title}
         description={emergencyRelief.description}
-      />
-      <Breadcrumbs
-        items={[
-          { label: "Programs", href: "/programs" },
-          { label: "Emergency Relief" },
-        ]}
-      />
+      />
       <ProgramDetail
         sections={emergencyRelief.sections}
         ctaLabel={emergencyRelief.ctaLabel}
+        photo={photos.emergencyRelief}
       />
     </>
   );

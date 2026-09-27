@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
+import { DonateBand } from "@/components/shared/donate-band";
 import { blogPosts } from "@/lib/content/blog";
 
 interface BlogPostPageProps {
@@ -39,12 +39,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <Breadcrumbs
-        items={[
-          { label: "Blog", href: "/blog" },
-          { label: post.title },
-        ]}
-      />
+
 
       <SectionWrapper>
         <article className="mx-auto max-w-3xl">
@@ -70,25 +65,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
 
           <div className="prose prose-lg max-w-none">
-            <p className="leading-relaxed text-foreground/80">
+            <p className="text-lg leading-relaxed text-foreground/85">
               {post.content}
             </p>
           </div>
 
-          <div className="mt-12 flex items-center justify-between border-t pt-8">
-            <Button asChild variant="outline" className="rounded-xl">
+          <div className="mt-12 border-t pt-8">
+            <Button asChild variant="outline" className="h-11 rounded-xl">
               <Link href="/blog">
                 <ArrowLeft className="mr-1 size-4" />
-                Back to Blog
+                All updates
               </Link>
-            </Button>
-            <Button variant="ghost" className="gap-2 text-muted-foreground">
-              <Share2 className="size-4" />
-              Share
             </Button>
           </div>
         </article>
       </SectionWrapper>
+      <DonateBand />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHero } from "@/components/shared/page-hero";
 import { ProgramDetail } from "@/components/programs/program-detail";
+import { photos } from "@/lib/content/photos";
 import { education } from "@/lib/content/programs";
 
 export const metadata: Metadata = {
@@ -16,16 +16,11 @@ export default function EducationPage() {
       <PageHero
         title={education.title}
         description={education.description}
-      />
-      <Breadcrumbs
-        items={[
-          { label: "Programs", href: "/programs" },
-          { label: "Education & Skills" },
-        ]}
-      />
+      />
       <ProgramDetail
         sections={education.sections}
         ctaLabel={education.ctaLabel}
+        photo={photos.education}
       />
     </>
   );
