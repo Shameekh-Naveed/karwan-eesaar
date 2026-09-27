@@ -16,35 +16,48 @@ export const ourStory = {
   values: ["Compassion", "Transparency", "Dignity"],
 } as const;
 
-export const timeline = [
+export interface TimelineEntry {
+  /** Short headline figure; omitted when there's no number to show */
+  figure?: string;
+  label: string;
+}
+
+export const timeline: readonly {
+  year: string;
+  photoAlt: string;
+  entries: readonly TimelineEntry[];
+}[] = [
   {
     year: "2025",
-    items: [
-      `Cloud burst relief in Battal: ${facts.battalFamilies2025}+ families`,
-      `Meals for ${facts.patientFamiliesFed2025} patient families`,
-      `${facts.sewingMachines2025} sewing machines donated to women`,
-      "Free eye camp",
+    photoAlt: "Relief work after the Battal cloud burst, 2025",
+    entries: [
+      { figure: `${facts.battalFamilies2025}+`, label: "families helped after the Battal cloud burst" },
+      { figure: `${facts.patientFamiliesFed2025}`, label: "patient families given meals" },
+      { figure: `${facts.sewingMachines2025}`, label: "sewing machines for women" },
+      { label: "Free eye camp" },
     ],
   },
   {
     year: "2024",
-    items: [
-      `Ramadan blood drive: ${facts.bloodDonorsOneDay} donors in one day`,
-      "Free eye camp with Sheikhupura specialists",
-      "Winter drive for SOS Children's Village and old age homes",
-      `Monthly rations for ${facts.rationFamiliesMonthly}+ families`,
+    photoAlt: "Ramadan blood donation camp, 2024",
+    entries: [
+      { figure: `${facts.bloodDonorsOneDay}`, label: "blood donors in one day, Ramadan" },
+      { figure: `${facts.rationFamiliesMonthly}+`, label: "families on monthly rations" },
+      { label: "Free eye camp with Sheikhupura specialists" },
+      { label: "Winter drive for SOS children and old age homes" },
     ],
   },
   {
     year: "2022",
-    items: [
-      `Flood relief for ${facts.floodFamilies2022}+ families`,
-      "IT classes for Huffaz launched",
-      "Taekwondo training started",
-      "School uniform drives",
+    photoAlt: "Flood relief supplies being distributed, 2022",
+    entries: [
+      { figure: `${facts.floodFamilies2022}+`, label: "families helped in the floods" },
+      { label: "IT classes for Huffaz launched" },
+      { label: "Taekwondo training started" },
+      { label: "School uniform drives" },
     ],
   },
-] as const;
+];
 
 /**
  * Real team members only. The section stays hidden while this is empty.
