@@ -1,17 +1,11 @@
 export const donateSection = {
   title: "Donate",
-  description: "Every rupee goes to families in need. Send to either account below.",
+  description: "Send to either account below.",
 };
 
 export const volunteerSection = {
   title: "Volunteer with us",
-  description: "Give a few hours. Fill in the form and we'll call you.",
-  opportunities: [
-    { title: "Field drives", detail: "Rations, flood relief, winter kits" },
-    { title: "IT instructor", detail: "Teach Huffaz basic computer skills" },
-    { title: "Event support", detail: "Eye camps, blood drives" },
-    { title: "Social media", detail: "Photos, videos, design" },
-  ],
+  description: "Leave your number and we'll call you about ration drives, classes or events.",
 };
 
 export const internshipSection = {

@@ -19,17 +19,19 @@ import { cn } from "@/lib/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const fieldClass = "h-11 rounded-xl bg-card px-3.5 text-base md:text-base";
+const fieldClass = "h-11 rounded-xl bg-card px-3.5 text-base md:text-base placeholder:text-muted-foreground/60";
 
 function Field({ field, error }: { field: FieldDef; error?: string }) {
   const id = `field-${field.name}`;
   const errorId = `${id}-error`;
+  const hintId = `${id}-hint`;
+  const describedBy = [field.hint && hintId, error && errorId].filter(Boolean).join(" ");
   const common = {
     id,
     name: field.name,
     required: field.required,
     "aria-invalid": error ? true : undefined,
-    "aria-describedby": error ? errorId : undefined,
+    "aria-describedby": describedBy || undefined,
   };
 
   let control: React.ReactNode;
@@ -83,6 +85,11 @@ function Field({ field, error }: { field: FieldDef; error?: string }) {
         {field.label}
       </Label>
       {control}
+      {field.hint && (
+        <p id={hintId} className="text-sm text-muted-foreground">
+          {field.hint}
+        </p>
+      )}
       {error && (
         <p id={errorId} className="text-sm font-medium text-destructive">
           {error}

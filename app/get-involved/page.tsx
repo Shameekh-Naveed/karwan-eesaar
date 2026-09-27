@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-float";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
@@ -26,10 +25,9 @@ export default function GetInvolvedPage() {
   return (
     <>
       <PageHero
-        title="Get Involved"
-        description="Donate, volunteer, or intern. Every bit of help reaches a family."
+        title="Get involved"
+        description="Donate, volunteer, or intern."
       />
-      <Breadcrumbs items={[{ label: "Get Involved" }]} />
 
       {/* Donate */}
       <SectionWrapper id="donate" className="scroll-mt-20">
@@ -44,30 +42,20 @@ export default function GetInvolvedPage() {
 
       {/* Volunteer */}
       <SectionWrapper variant="alt" id="volunteer" className="scroll-mt-20">
-        <div className="grid gap-10 lg:grid-cols-[2fr_3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              align="left"
-              title={volunteerSection.title}
-              subtitle={volunteerSection.description}
-              className="mb-8"
-            />
-            <ul className="divide-y divide-border border-y">
-              {volunteerSection.opportunities.map((opp) => (
-                <li key={opp.title} className="py-4">
-                  <p className="font-semibold text-foreground">{opp.title}</p>
-                  <p className="text-sm text-muted-foreground">{opp.detail}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="mx-auto grid max-w-5xl items-start gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16">
+          <SectionHeading
+            align="left"
+            title={volunteerSection.title}
+            subtitle={volunteerSection.description}
+            className="mb-0"
+          />
           <LeadForm formId="volunteer" />
         </div>
       </SectionWrapper>
 
       {/* Internship */}
       <SectionWrapper id="internship" className="scroll-mt-20">
-        <div className="grid gap-10 lg:grid-cols-[2fr_3fr] lg:gap-16">
+        <div className="mx-auto grid max-w-5xl items-start gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16">
           <div>
             <SectionHeading
               align="left"
@@ -78,7 +66,7 @@ export default function GetInvolvedPage() {
             <ul className="space-y-3">
               {internshipSection.perks.map((perk) => (
                 <li key={perk} className="flex items-start gap-3 text-foreground">
-                  <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-gold-foreground">
+                  <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
                     <Check className="size-3.5" strokeWidth={3} />
                   </span>
                   {perk}

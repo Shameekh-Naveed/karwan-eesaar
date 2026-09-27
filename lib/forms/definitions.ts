@@ -15,6 +15,8 @@ export interface FieldDef {
   type: FieldType;
   required?: boolean;
   placeholder?: string;
+  /** Format help shown under the field, so it never looks like pre-filled text */
+  hint?: string;
   autoComplete?: string;
   options?: readonly string[];
   min?: number;
@@ -43,55 +45,30 @@ const nameField: FieldDef = {
 
 const phoneField: FieldDef = {
   name: "phone",
-  label: "Phone / WhatsApp",
+  label: "WhatsApp number",
   type: "tel",
   required: true,
-  placeholder: "03XX-XXXXXXX",
+  hint: "e.g. 0344 1234567",
   autoComplete: "tel",
-};
-
-const ageField: FieldDef = {
-  name: "age",
-  label: "Age",
-  type: "number",
-  required: true,
-  min: 14,
-  max: 90,
-};
-
-const cityField: FieldDef = {
-  name: "city",
-  label: "City",
-  type: "text",
-  required: true,
-  placeholder: "e.g. Mansehra",
-  autoComplete: "address-level2",
 };
 
 export const forms = {
   volunteer: {
     id: "volunteer",
-    title: "Volunteer application",
+    title: "Volunteer sign-up",
     submitLabel: "Sign me up",
     successTitle: "JazakAllah, you're on the list!",
     successMessage: "Our team will call or WhatsApp you within a few days.",
+    // Kept to three fields on purpose; everything else is collected on the call
     fields: [
       nameField,
       phoneField,
-      ageField,
-      cityField,
-      {
-        name: "qualification",
-        label: "Qualification",
-        type: "text",
-        required: true,
-        placeholder: "e.g. BS Computer Science",
-      },
       {
         name: "interest",
         label: "How would you like to help?",
         type: "select",
         required: true,
+        wide: true,
         options: [
           "Field drives (rations, relief, winter)",
           "Teaching / IT classes",
@@ -99,12 +76,6 @@ export const forms = {
           "Event support",
           "Wherever I'm needed",
         ],
-      },
-      {
-        name: "message",
-        label: "Anything else? (optional)",
-        type: "textarea",
-        wide: true,
       },
     ],
   },
@@ -114,31 +85,17 @@ export const forms = {
     submitLabel: "Apply for internship",
     successTitle: "Application received!",
     successMessage:
-      "We'll review it and get back to you by phone or WhatsApp. Keep an eye out.",
+      "We'll review it and get back to you on WhatsApp. Keep an eye out.",
     fields: [
       nameField,
       phoneField,
       {
-        name: "email",
-        label: "Email",
-        type: "email",
-        required: true,
-        autoComplete: "email",
-      },
-      ageField,
-      cityField,
-      {
         name: "institution",
-        label: "University / college",
+        label: "University & degree",
         type: "text",
         required: true,
-      },
-      {
-        name: "program",
-        label: "Degree & semester",
-        type: "text",
-        required: true,
-        placeholder: "e.g. BBA, 6th semester",
+        wide: true,
+        hint: "e.g. Hazara University, BBA 6th semester",
       },
       {
         name: "area",
@@ -160,12 +117,6 @@ export const forms = {
         type: "select",
         required: true,
         options: ["4 weeks", "6 weeks", "8 weeks", "3 months"],
-      },
-      {
-        name: "message",
-        label: "Why do you want to intern with us? (optional)",
-        type: "textarea",
-        wide: true,
       },
     ],
   },
