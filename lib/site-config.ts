@@ -29,7 +29,11 @@ export const siteConfig = {
       bankName: "Meezan Bank",
       accountTitle: "Qazi Hamza Hassan",
       accountNumber: "30010109329538",
+      // TODO: get the exact IBAN from Qazi Hamza (shown only once set; never guess it)
+      iban: null as string | null,
     },
+    // TODO: confirm wording; explains why the accounts are in a personal name
+    holderNote: "Both accounts are held by Qazi Hamza Hassan on behalf of Karwan-e-Eesaar.",
   },
   social: {
     instagram: "https://www.instagram.com/karwan_eesaar/",
