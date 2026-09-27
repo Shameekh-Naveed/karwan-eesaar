@@ -1,21 +1,17 @@
-import { HeroCarousel } from "@/components/home/hero-carousel";
+import { HomeHero } from "@/components/home/home-hero";
 import { ImpactCounter } from "@/components/home/impact-counter";
 import { CorePrograms } from "@/components/home/core-programs";
-import { FeaturedInitiatives } from "@/components/home/featured-initiatives";
+import { FeaturedStory } from "@/components/home/featured-story";
 import { HowYouCanHelp } from "@/components/home/how-you-can-help";
-import { LatestUpdates } from "@/components/home/latest-updates";
-import { TestimonialsCarousel } from "@/components/home/testimonials-carousel";
 
 export default function HomePage() {
   return (
     <>
-      <HeroCarousel />
+      <HomeHero />
       <ImpactCounter />
       <CorePrograms />
-      <FeaturedInitiatives />
+      <FeaturedStory />
       <HowYouCanHelp />
-      <TestimonialsCarousel />
-      <LatestUpdates />
     </>
   );
 }

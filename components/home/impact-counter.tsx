@@ -11,7 +11,7 @@ function AnimatedCounter({
   suffix: string;
 }) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const element = ref.current;
@@ -32,7 +32,8 @@ function AnimatedCounter({
         const startTime = performance.now();
 
         function animate(currentTime: number) {
-          const progress = Math.min((currentTime - startTime) / duration, 1);
+          // rAF timestamps can precede startTime by a frame, so clamp at 0 too
+          const progress = Math.min(Math.max((currentTime - startTime) / duration, 0), 1);
           const eased = 1 - Math.pow(1 - progress, 4);
           setCount(Math.round(eased * target));
           if (progress < 1) frame = requestAnimationFrame(animate);
@@ -51,37 +52,31 @@ function AnimatedCounter({
   }, [target]);
 
   return (
-    <div
+    <p
       ref={ref}
-      className="font-heading text-4xl font-extrabold tabular-nums text-gold md:text-6xl"
+      className="font-heading text-4xl font-extrabold tabular-nums text-primary md:text-5xl"
     >
       {count.toLocaleString()}
       {suffix}
-    </div>
+    </p>
   );
 }
 
 export function ImpactCounter() {
   return (
-    <section className="bg-primary py-16 text-primary-foreground md:py-24">
+    <section aria-label="Our impact in numbers" className="bg-background py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-3xl font-extrabold uppercase tracking-tight md:mb-16 md:text-4xl">
-          Our impact in numbers
-        </h2>
-
-        <dl className="mx-auto grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 md:gap-y-14">
+        {/* items-start keeps every number on the same line, however long its label */}
+        <ul className="mx-auto grid max-w-5xl grid-cols-2 items-start gap-x-6 gap-y-10 md:grid-cols-4">
           {impactStats.map((stat) => (
-            // dt must precede dd in markup; flex-col-reverse puts the number on top visually
-            <div key={stat.label} className="flex flex-col-reverse text-center">
-              <dt className="mx-auto mt-2 max-w-[16ch] text-sm font-medium text-primary-foreground/75 md:text-base">
+            <li key={stat.label} className="text-center">
+              <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              <p className="mx-auto mt-2 max-w-[18ch] text-sm font-medium text-muted-foreground md:text-base">
                 {stat.label}
-              </dt>
-              <dd>
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-              </dd>
-            </div>
+              </p>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );
