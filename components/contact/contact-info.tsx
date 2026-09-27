@@ -6,10 +6,6 @@ import { getWhatsAppLink } from "@/lib/site-config";
 export function ContactInfo() {
   const items = [
     {
-      ...contactDetails.email,
-      link: contactDetails.email.href,
-    },
-    {
       ...contactDetails.phone,
       link: contactDetails.phone.href,
     },

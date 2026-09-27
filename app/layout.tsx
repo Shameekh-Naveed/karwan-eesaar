@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, DM_Sans, Geist_Mono } from "next/font/google";
+import { AnnouncementTicker } from "@/components/layout/announcement-ticker";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloat } from "@/components/layout/whatsapp-float";
@@ -85,26 +86,25 @@ export default function RootLayout({
               contactPoint: {
                 "@type": "ContactPoint",
                 telephone: siteConfig.contact.phone,
-                email: siteConfig.contact.email,
+                ...(siteConfig.contact.email && {
+                  email: siteConfig.contact.email,
+                }),
                 contactType: "customer service",
               },
               address: {
                 "@type": "PostalAddress",
-                streetAddress: siteConfig.contact.address,
+                streetAddress: "Old College Road",
+                addressLocality: "Mansehra",
+                postalCode: "21300",
                 addressCountry: "PK",
               },
-              sameAs: [
-                siteConfig.social.facebook,
-                siteConfig.social.instagram,
-                siteConfig.social.twitter,
-                siteConfig.social.linkedin,
-                siteConfig.social.youtube,
-              ],
+              sameAs: [siteConfig.social.instagram],
             }),
           }}
         />
       </head>
       <body className={`${geistMono.variable} antialiased`}>
+        <AnnouncementTicker />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

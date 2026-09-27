@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { navItems } from "@/lib/content/navigation";
-import { siteConfig, getWhatsAppLink } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 import { useState } from "react";
 
 export function MobileNav() {
@@ -69,16 +69,12 @@ export function MobileNav() {
           <div className="mt-4 border-t pt-4">
             <Button
               asChild
-              className="w-full rounded-xl bg-secondary text-secondary-foreground"
+              className="h-11 w-full rounded-xl bg-gold font-bold text-gold-foreground hover:bg-gold/90"
             >
-              <a
-                href={getWhatsAppLink("donate")}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="/get-involved#donate" onClick={() => setOpen(false)}>
                 <Heart className="mr-1 size-4" />
-                Donate Now
-              </a>
+                Donate now
+              </Link>
             </Button>
           </div>
         </nav>

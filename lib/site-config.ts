@@ -1,11 +1,11 @@
 export const siteConfig = {
   name: "Karwan-e-Eesaar Welfare Organization",
-  tagline: "Empowering Communities, Transforming Lives",
+  tagline: "Serving Humanity, Creating Impact",
   description:
-    "Karwan-e-Eesaar Welfare Organization is a Pakistani charitable organization dedicated to education, healthcare, and community development. Join us in making a difference.",
+    "Karwan-e-Eesaar Welfare Organization is a Mansehra-based charity providing monthly rations, education, healthcare, and emergency relief to families in need across Pakistan.",
   url: "https://eesaar.org",
   whatsapp: {
-    number: "923001234567",
+    number: "923440992830",
     donateMessage:
       "Hello! I would like to make a donation to Karwan-e-Eesaar Welfare Organization.",
     volunteerMessage:
@@ -14,16 +14,25 @@ export const siteConfig = {
       "Hello! I would like to learn more about Karwan-e-Eesaar Welfare Organization.",
   },
   contact: {
-    email: "info@eesaar.org",
-    phone: "+92 300 1234567",
-    address: "123 Main Boulevard, Gulberg III, Lahore, Pakistan",
+    // TODO: confirm a public email address with Qazi Hamza; hidden everywhere while null
+    email: null as string | null,
+    phone: "+92 344 0992830",
+    address: "Old College Road, Mansehra 21300, Pakistan",
+    mapsUrl: "https://maps.google.com/?q=Old+College+Road+Mansehra+21300",
+  },
+  donation: {
+    easypaisa: {
+      number: "0344-0992830",
+      accountName: "Qazi Hamza Hassan",
+    },
+    bank: {
+      bankName: "Meezan Bank",
+      accountTitle: "Qazi Hamza Hassan",
+      accountNumber: "30010109329538",
+    },
   },
   social: {
-    facebook: "https://facebook.com/eesaarfoundation",
-    instagram: "https://instagram.com/eesaarfoundation",
-    twitter: "https://twitter.com/eesaarfoundation",
-    linkedin: "https://linkedin.com/company/eesaarfoundation",
-    youtube: "https://youtube.com/@eesaarfoundation",
+    instagram: "https://www.instagram.com/karwan_eesaar/",
   },
 } as const;
 

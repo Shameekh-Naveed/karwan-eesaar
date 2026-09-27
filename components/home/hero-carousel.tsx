@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import Autoplay from "embla-carousel-autoplay";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -11,8 +11,8 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { SandSwoosh } from "@/components/shared/sand-swoosh";
 import { heroSlides } from "@/lib/content/home";
-import { getWhatsAppLink, siteConfig } from "@/lib/site-config";
 
 export function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -33,12 +33,7 @@ export function HeroCarousel() {
   }, [api, onSelect]);
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="relative z-20 border-b border-white/15 bg-black/25 px-4 py-3 text-center backdrop-blur-sm md:py-3.5">
-        <p className="mx-auto max-w-4xl text-sm font-semibold leading-snug text-white md:text-base">
-          {siteConfig.name}
-        </p>
-      </div>
+    <section className="bg-navy-glow relative overflow-hidden">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
@@ -46,87 +41,40 @@ export function HeroCarousel() {
         className="w-full"
       >
         <CarouselContent>
-          {heroSlides.map((slide, index) => (
-            <CarouselItem key={index}>
-              <div className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-primary">
-                {/* Geometric background pattern */}
-                <div className="absolute inset-0 opacity-[0.07]">
-                  <div className="absolute -right-20 -top-20 h-[500px] w-[500px] rounded-full border-[60px] border-white" />
-                  <div className="absolute -bottom-32 -left-32 h-[600px] w-[600px] rounded-full border-[80px] border-white" />
-                  <div className="absolute right-1/4 top-1/3 h-[200px] w-[200px] rotate-45 border-[40px] border-white" />
-                </div>
-
-                {/* Gradient overlays */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-secondary/80" />
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent" />
-
-                <div className="relative z-10 container mx-auto px-6 py-24 md:px-8">
+          {heroSlides.map((slide) => (
+            <CarouselItem key={slide.title}>
+              <div className="flex min-h-[78vh] items-center justify-center md:min-h-[82vh]">
+                <div className="container mx-auto px-6 pb-36 pt-16 md:px-16 md:pb-40">
                   <div className="mx-auto max-w-4xl text-center">
-                    {/* Slide number indicator */}
-                    <div
-                      className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm text-white/80 backdrop-blur-sm"
-                      style={{
-                        animationDelay: "0.1s",
-                        animation: "fadeInUp 0.6s ease-out both",
-                      }}
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                      {index === 0
-                        ? "Who We Are"
-                        : index === 1
-                          ? "Disaster Response"
-                          : index === 2
-                            ? "Education Programs"
-                            : "Seasonal Campaigns"}
-                    </div>
-
-                    <h1
-                      className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
-                      style={{
-                        animationDelay: "0.2s",
-                        animation: "fadeInUp 0.6s ease-out both",
-                      }}
-                    >
+                    <p className="hero-rise text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+                      {slide.eyebrow}
+                    </p>
+                    <h1 className="hero-rise mt-4 text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-primary-foreground [animation-delay:80ms] sm:text-5xl md:text-6xl lg:text-7xl">
                       {slide.title}
                     </h1>
-                    <p
-                      className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl"
-                      style={{
-                        animationDelay: "0.35s",
-                        animation: "fadeInUp 0.6s ease-out both",
-                      }}
-                    >
+                    <p className="hero-rise mx-auto mt-6 max-w-xl text-lg leading-relaxed text-primary-foreground/80 [animation-delay:160ms] md:text-xl">
                       {slide.subtitle}
                     </p>
-                    <div
-                      className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-                      style={{
-                        animationDelay: "0.5s",
-                        animation: "fadeInUp 0.6s ease-out both",
-                      }}
-                    >
+                    <div className="hero-rise mt-10 flex flex-col items-center gap-3 [animation-delay:240ms] sm:flex-row sm:justify-center sm:gap-4">
                       <Button
                         asChild
                         size="lg"
-                        className="h-12 rounded-xl bg-white px-8 text-base font-semibold text-primary shadow-lg shadow-black/20 transition-all hover:bg-white/90 hover:shadow-xl"
+                        className="h-13 w-full max-w-xs rounded-xl bg-gold px-8 text-base font-bold text-gold-foreground shadow-lg shadow-black/25 hover:bg-gold/90 sm:w-auto"
                       >
-                        <a
-                          href={getWhatsAppLink(slide.ctaLink)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {slide.ctaLabel}
-                          <ArrowRight className="ml-1 size-4" />
-                        </a>
+                        <Link href="/get-involved#donate">
+                          <Heart className="size-4" />
+                          Donate now
+                        </Link>
                       </Button>
                       <Button
                         asChild
                         variant="outline"
                         size="lg"
-                        className="h-12 rounded-xl border-white/30 bg-white/5 px-8 text-base font-medium text-white backdrop-blur-sm hover:bg-white/15"
+                        className="h-13 w-full max-w-xs rounded-xl border-primary-foreground/30 bg-transparent px-8 text-base font-medium text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground sm:w-auto"
                       >
                         <Link href={slide.secondaryCtaLink}>
                           {slide.secondaryCtaLabel}
+                          <ArrowRight className="size-4" />
                         </Link>
                       </Button>
                     </div>
@@ -138,48 +86,66 @@ export function HeroCarousel() {
         </CarouselContent>
       </Carousel>
 
-      {/* Navigation arrows */}
+      {/* Navigation arrows (desktop only; phones swipe) */}
       <button
         onClick={() => api?.scrollPrev()}
-        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20 md:left-6 md:h-12 md:w-12"
+        className="absolute left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/20 text-primary-foreground transition-colors hover:bg-primary-foreground/10 md:flex"
         aria-label="Previous slide"
       >
         <ChevronLeft className="size-5" />
       </button>
       <button
         onClick={() => api?.scrollNext()}
-        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20 md:right-6 md:h-12 md:w-12"
+        className="absolute right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/20 text-primary-foreground transition-colors hover:bg-primary-foreground/10 md:flex"
         aria-label="Next slide"
       >
         <ChevronRight className="size-5" />
       </button>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2.5">
-        {heroSlides.map((_, index) => (
+      <div className="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 gap-1 md:bottom-28">
+        {heroSlides.map((slide, index) => (
           <button
-            key={index}
+            key={slide.title}
             onClick={() => api?.scrollTo(index)}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              current === index
-                ? "w-10 bg-white shadow-lg"
-                : "w-2.5 bg-white/40 hover:bg-white/60"
-            }`}
+            className="flex h-6 items-center px-1"
             aria-label={`Go to slide ${index + 1}`}
-          />
+            aria-current={current === index}
+          >
+            <span
+              className={`block h-2 rounded-full transition-all duration-300 ${
+                current === index
+                  ? "w-8 bg-gold"
+                  : "w-2 bg-primary-foreground/40 hover:bg-primary-foreground/60"
+              }`}
+            />
+          </button>
         ))}
       </div>
 
-      {/* CSS animation */}
+      <SandSwoosh />
+
       <style jsx>{`
-        @keyframes fadeInUp {
+        .hero-rise {
+          /* longhands so the Tailwind animation-delay utilities still apply */
+          animation-name: heroRise;
+          animation-duration: 0.7s;
+          animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+          animation-fill-mode: both;
+        }
+        @keyframes heroRise {
           from {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-rise {
+            animation: none;
           }
         }
       `}</style>

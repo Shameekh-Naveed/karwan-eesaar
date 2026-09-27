@@ -39,8 +39,9 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-brand-royal: var(--brand-royal);
-  --color-brand-teal: var(--brand-teal);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-sand: var(--sand);
   --color-brand-sky: var(--brand-sky);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -52,54 +53,59 @@
 }
 
 :root {
-  /* Brand Colors: Deep Royal Blue #2F3A8F, Bright Teal #1FA9D6, Soft Sky Blue #4FC3F7 */
-  --brand-royal: oklch(0.35 0.12 270);
-  --brand-teal: oklch(0.63 0.12 220);
-  --brand-sky: oklch(0.74 0.10 230);
+  /*
+   * Palette sampled from @karwan_eesaar Instagram:
+   * deep navy grounds, cream surfaces, camel/sand swooshes, amber-gold highlights.
+   * Sky blue survives only as the logo's secondary hand.
+   */
+  --gold: oklch(0.79 0.14 75);
+  --gold-foreground: oklch(0.24 0.08 268);
+  --sand: oklch(0.86 0.05 80);
+  --brand-sky: oklch(0.70 0.12 225);
 
-  --background: oklch(0.995 0.002 250);
-  --foreground: oklch(0.16 0.02 270);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0.02 270);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0.02 270);
+  --background: oklch(0.982 0.014 85);
+  --foreground: oklch(0.22 0.06 268);
+  --card: oklch(0.994 0.006 85);
+  --card-foreground: oklch(0.22 0.06 268);
+  --popover: oklch(0.994 0.006 85);
+  --popover-foreground: oklch(0.22 0.06 268);
 
-  /* Primary = Deep Royal Blue */
-  --primary: oklch(0.35 0.12 270);
-  --primary-foreground: oklch(0.98 0.005 250);
+  /* Primary = Deep navy */
+  --primary: oklch(0.28 0.09 268);
+  --primary-foreground: oklch(0.97 0.02 85);
 
-  /* Secondary = Bright Teal */
-  --secondary: oklch(0.63 0.12 220);
-  --secondary-foreground: oklch(0.98 0.005 220);
+  /* Secondary = Camel (dark enough to read as text on cream) */
+  --secondary: oklch(0.52 0.09 60);
+  --secondary-foreground: oklch(0.98 0.015 85);
 
-  /* Muted = Light blue-gray */
-  --muted: oklch(0.965 0.008 250);
-  --muted-foreground: oklch(0.50 0.03 260);
+  /* Muted = Warm cream */
+  --muted: oklch(0.95 0.022 82);
+  --muted-foreground: oklch(0.45 0.035 265);
 
-  /* Accent = Soft Sky Blue */
-  --accent: oklch(0.74 0.10 230);
-  --accent-foreground: oklch(0.20 0.06 270);
+  /* Accent = Sand */
+  --accent: oklch(0.86 0.05 80);
+  --accent-foreground: oklch(0.24 0.08 268);
 
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.91 0.01 250);
-  --input: oklch(0.91 0.01 250);
-  --ring: oklch(0.63 0.12 220);
+  --destructive: oklch(0.55 0.2 27);
+  --border: oklch(0.89 0.028 80);
+  --input: oklch(0.87 0.03 80);
+  --ring: oklch(0.52 0.09 60);
 
-  --chart-1: oklch(0.35 0.12 270);
-  --chart-2: oklch(0.63 0.12 220);
-  --chart-3: oklch(0.74 0.10 230);
-  --chart-4: oklch(0.50 0.15 270);
-  --chart-5: oklch(0.45 0.10 250);
+  --chart-1: oklch(0.28 0.09 268);
+  --chart-2: oklch(0.52 0.09 60);
+  --chart-3: oklch(0.79 0.14 75);
+  --chart-4: oklch(0.86 0.05 80);
+  --chart-5: oklch(0.70 0.12 225);
   --radius: 0.625rem;
 
-  --sidebar: oklch(0.98 0.005 250);
-  --sidebar-foreground: oklch(0.16 0.02 270);
-  --sidebar-primary: oklch(0.35 0.12 270);
-  --sidebar-primary-foreground: oklch(0.98 0.005 250);
-  --sidebar-accent: oklch(0.965 0.008 250);
-  --sidebar-accent-foreground: oklch(0.20 0.06 270);
-  --sidebar-border: oklch(0.91 0.01 250);
-  --sidebar-ring: oklch(0.63 0.12 220);
+  --sidebar: oklch(0.975 0.016 85);
+  --sidebar-foreground: oklch(0.22 0.06 268);
+  --sidebar-primary: oklch(0.28 0.09 268);
+  --sidebar-primary-foreground: oklch(0.97 0.02 85);
+  --sidebar-accent: oklch(0.95 0.022 82);
+  --sidebar-accent-foreground: oklch(0.24 0.08 268);
+  --sidebar-border: oklch(0.89 0.028 80);
+  --sidebar-ring: oklch(0.52 0.09 60);
 }
 
 .dark {
@@ -158,18 +164,49 @@ html {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(0.965 0.008 250);
+  background: var(--muted);
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.63 0.12 220);
+  background: var(--sand);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.35 0.12 270);
+  background: var(--secondary);
 }
 
 /* Selection color */
 ::selection {
-  background: oklch(0.74 0.10 230 / 30%);
-  color: oklch(0.16 0.02 270);
+  background: oklch(0.79 0.14 75 / 35%);
+  color: var(--foreground);
+}
+
+/* Navy ground lit from the centre, like the Instagram quote posts */
+.bg-navy-glow {
+  background-color: var(--primary);
+  background-image: radial-gradient(
+    ellipse 80% 70% at 50% 45%,
+    oklch(0.36 0.1 266) 0%,
+    transparent 70%
+  );
+}
+
+/* Announcement ticker */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.group:hover .animate-marquee {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }

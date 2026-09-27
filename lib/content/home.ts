@@ -1,48 +1,50 @@
 export const heroSlides = [
   {
-    title: "Empowering Communities Through Compassion",
-    subtitle:
-      "Join Karwan-e-Eesaar Welfare Organization in building a brighter future for underprivileged communities across Pakistan.",
-    ctaLabel: "Donate Now",
-    ctaLink: "donate" as const,
-    secondaryCtaLabel: "Become a Volunteer",
+    eyebrow: "Monthly rations",
+    title: "No family should go to bed hungry",
+    subtitle: "100+ deserving families get a food ration from us every month.",
+    secondaryCtaLabel: "Volunteer with us",
     secondaryCtaLink: "/get-involved#volunteer",
   },
   {
-    title: "Flood Relief — Standing With Those in Need",
-    subtitle:
-      "Over 500 families supported during the 2022 floods. We respond when disaster strikes.",
-    ctaLabel: "See Our Impact",
-    ctaLink: "general" as const,
-    secondaryCtaLabel: "Support Relief",
+    eyebrow: "Disaster response",
+    title: "When floods hit, we show up",
+    subtitle: "500+ families reached with food, clothes and supplies in 2022.",
+    secondaryCtaLabel: "See relief work",
     secondaryCtaLink: "/programs/emergency-relief",
   },
   {
-    title: "Education That Transforms Lives",
-    subtitle:
-      "IT classes for Huffaz, Taekwondo training, and school uniform drives — building futures through knowledge.",
-    ctaLabel: "Support Education",
-    ctaLink: "donate" as const,
-    secondaryCtaLabel: "Our Programs",
+    eyebrow: "Education",
+    title: "Give hope through education",
+    subtitle: "IT classes for Huffaz, Taekwondo training and school uniforms.",
+    secondaryCtaLabel: "See education work",
     secondaryCtaLink: "/programs/education",
   },
   {
-    title: "Winter Care — Warmth for Every Family",
-    subtitle:
-      "Providing blankets, warm clothes, and essentials to families facing harsh winters.",
-    ctaLabel: "Help Families This Winter",
-    ctaLink: "donate" as const,
-    secondaryCtaLabel: "Learn More",
+    eyebrow: "Winter care",
+    title: "Warmth for every child this winter",
+    subtitle: "Blankets and warm clothes for SOS children and old age homes.",
+    secondaryCtaLabel: "See winter drives",
     secondaryCtaLink: "/programs/winter-relief",
   },
 ] as const;
 
+export const tickerMessages = [
+  "Donate now to help children",
+  "Monthly rations for deserving families",
+  "Easypaisa 0344-0992830",
+  "Students: internships now open",
+  "Volunteer with Karwan-e-Eesaar",
+] as const;
+
+// Six figures so the grid always balances: 3 + 3 on desktop, 2 + 2 + 2 on phones
 export const impactStats = [
-  { value: 100, label: "Families Supported Monthly", suffix: "+" },
-  { value: 500, label: "Flood Relief Beneficiaries", suffix: "+" },
-  { value: 50, label: "Blood Donors Mobilized", suffix: "+" },
-  { value: 30, label: "Students in IT Classes", suffix: "+" },
-  { value: 200, label: "Eye Camp Patients Treated", suffix: "+" },
+  { value: 100, label: "Families fed every month", suffix: "+" },
+  { value: 500, label: "Families reached in the 2022 floods", suffix: "+" },
+  { value: 200, label: "Eye camp patients treated", suffix: "+" },
+  { value: 50, label: "Blood donors in one day", suffix: "" },
+  { value: 50, label: "Patient families given meals", suffix: "" },
+  { value: 30, label: "Huffaz in IT classes", suffix: "+" },
 ] as const;
 
 export const corePrograms = [
@@ -102,28 +104,22 @@ export const featuredInitiatives = [
 
 export const howYouCanHelp = [
   {
-    icon: "Heart" as const,
     title: "Donate",
-    description:
-      "Your generous contributions fund our programs and reach those who need it most.",
-    ctaLabel: "Donate Now",
-    ctaType: "donate" as const,
+    description: "Easypaisa or Meezan Bank. Every rupee reaches a family.",
+    ctaLabel: "See account details",
+    href: "/get-involved#donate",
   },
   {
-    icon: "Users" as const,
     title: "Volunteer",
-    description:
-      "Share your time and skills — from IT instruction to event support.",
-    ctaLabel: "Join as Volunteer",
-    ctaType: "volunteer" as const,
+    description: "Join a ration drive, teach a class, or help online.",
+    ctaLabel: "Sign up",
+    href: "/get-involved#volunteer",
   },
   {
-    icon: "Share2" as const,
-    title: "Partner With Us",
-    description:
-      "Corporate partnerships, university collaborations, and in-kind donations welcome.",
-    ctaLabel: "Get in Touch",
-    ctaType: "general" as const,
+    title: "Intern",
+    description: "Students: gain real experience with our team.",
+    ctaLabel: "Apply",
+    href: "/get-involved#internship",
   },
 ] as const;
 

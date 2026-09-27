@@ -1,54 +1,36 @@
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { IconBox, type IconName } from "@/components/shared/icon-box";
 import { howYouCanHelp } from "@/lib/content/home";
-import { getWhatsAppLink } from "@/lib/site-config";
 
 export function HowYouCanHelp() {
   return (
-    <SectionWrapper variant="dark">
-      <SectionHeading
-        title="How You Can Help"
-        subtitle="Every act of kindness creates a ripple of change. Here's how you can be part of the movement."
-        dark
-      />
-      <div className="grid gap-8 md:grid-cols-3">
-        {howYouCanHelp.map((item) => (
-          <div
-            key={item.title}
-            className="group rounded-2xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/10"
-          >
-            <div className="mb-5 flex justify-center">
-              <IconBox
-                icon={item.icon as IconName}
-                size="lg"
-                className="bg-white/10 text-white transition-colors group-hover:bg-secondary/30 group-hover:text-secondary"
-              />
-            </div>
-            <h3 className="mb-3 text-xl font-semibold text-white">
-              {item.title}
-            </h3>
-            <p className="mb-6 leading-relaxed text-white/70">
-              {item.description}
-            </p>
-            <Button
-              asChild
-              className="rounded-xl bg-white/15 text-white backdrop-blur-sm transition-all hover:bg-white/25"
+    <SectionWrapper variant="dark" className="bg-navy-glow">
+      <h2 className="mb-10 text-center text-3xl font-extrabold uppercase tracking-tight md:mb-14 md:text-4xl">
+        How you can help
+      </h2>
+      <ol className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3 md:gap-0 md:divide-x md:divide-primary-foreground/15">
+        {howYouCanHelp.map((item, index) => (
+          <li key={item.title}>
+            <Link
+              href={item.href}
+              className="group flex h-full flex-col rounded-2xl border border-primary-foreground/15 p-6 transition-colors hover:bg-primary-foreground/5 md:rounded-none md:border-0 md:px-10 md:py-4"
             >
-              <a
-                href={getWhatsAppLink(item.ctaType)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <span className="font-heading text-5xl font-extrabold text-gold/90">
+                {index + 1}
+              </span>
+              <span className="mt-3 text-2xl font-bold">{item.title}</span>
+              <span className="mt-2 flex-1 text-primary-foreground/75">
+                {item.description}
+              </span>
+              <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-gold">
                 {item.ctaLabel}
-                <ArrowRight className="ml-1 size-4" />
-              </a>
-            </Button>
-          </div>
+                <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+              </span>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ol>
     </SectionWrapper>
   );
 }

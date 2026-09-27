@@ -2,20 +2,10 @@ import { Button } from "@/components/ui/button";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { socialLinks } from "@/lib/content/contact";
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
-} from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const iconMap = {
-  Facebook,
   Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
 } as const;
 
 export function SocialLinks() {
@@ -23,7 +13,7 @@ export function SocialLinks() {
     <SectionWrapper>
       <SectionHeading
         title="Follow Us"
-        subtitle="Stay connected through our social media channels."
+        subtitle="See every drive as it happens."
       />
       <div className="flex flex-wrap justify-center gap-4">
         {socialLinks.map((link) => {

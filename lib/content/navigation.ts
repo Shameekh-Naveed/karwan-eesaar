@@ -12,7 +12,16 @@ export const navItems = [
       { label: "Winter Relief", href: "/programs/winter-relief" },
     ],
   },
-  { label: "Get Involved", href: "/get-involved" },
+  {
+    label: "Get Involved",
+    href: "/get-involved",
+    children: [
+      { label: "Donate", href: "/get-involved#donate" },
+      { label: "Volunteer", href: "/get-involved#volunteer" },
+      { label: "Internships", href: "/get-involved#internship" },
+      { label: "Partner With Us", href: "/get-involved#partner" },
+    ],
+  },
   { label: "Impact", href: "/impact" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
@@ -43,8 +52,8 @@ export const footerLinks = {
     links: [
       { label: "Donate", href: "/get-involved#donate" },
       { label: "Volunteer", href: "/get-involved#volunteer" },
+      { label: "Internships", href: "/get-involved#internship" },
       { label: "Partner With Us", href: "/get-involved#partner" },
-      { label: "Impact & Reports", href: "/impact" },
     ],
   },
   legal: {

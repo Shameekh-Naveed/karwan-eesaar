@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { Heart, Mail, Phone, MapPin, Instagram } from "lucide-react";
 import { footerLinks } from "@/lib/content/navigation";
 import { siteConfig } from "@/lib/site-config";
 
@@ -40,13 +40,15 @@ export function Footer() {
               {siteConfig.description}
             </p>
             <div className="mt-6 space-y-2">
-              <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80"
-              >
-                <Mail className="size-4" />
-                {siteConfig.contact.email}
-              </a>
+              {siteConfig.contact.email && (
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80"
+                >
+                  <Mail className="size-4" />
+                  {siteConfig.contact.email}
+                </a>
+              )}
               <a
                 href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
                 className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80"
@@ -54,10 +56,24 @@ export function Footer() {
                 <Phone className="size-4" />
                 {siteConfig.contact.phone}
               </a>
-              <p className="flex items-center gap-2 text-sm text-white/60">
+              <a
+                href={siteConfig.contact.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80"
+              >
                 <MapPin className="size-4 shrink-0" />
                 {siteConfig.contact.address}
-              </p>
+              </a>
+              <a
+                href={siteConfig.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80"
+              >
+                <Instagram className="size-4 shrink-0" />
+                @karwan_eesaar
+              </a>
             </div>
           </div>
 

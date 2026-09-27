@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Heart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/lib/content/navigation";
-import { siteConfig, getWhatsAppLink } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 import { MobileNav } from "./mobile-nav";
 
 export function Header() {
@@ -83,16 +83,12 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Button
             asChild
-            className="hidden rounded-xl bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/90 lg:inline-flex"
+            className="hidden rounded-xl bg-gold font-bold text-gold-foreground shadow-sm hover:bg-gold/90 lg:inline-flex"
           >
-            <a
-              href={getWhatsAppLink("donate")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href="/get-involved#donate">
               <Heart className="mr-1 size-4" />
-              Donate Now
-            </a>
+              Donate now
+            </Link>
           </Button>
           <MobileNav />
         </div>

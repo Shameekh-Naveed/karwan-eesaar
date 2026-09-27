@@ -1,8 +1,11 @@
+import { siteConfig } from "@/lib/site-config";
+
+const { easypaisa, bank } = siteConfig.donation;
+
 export const faqItems = [
   {
     question: "How can I donate to Karwan-e-Eesaar Welfare Organization?",
-    answer:
-      "You can donate via WhatsApp by clicking the Donate button on our website. We accept bank transfers and mobile payments. Our team will guide you through the process.",
+    answer: `Send to Easypaisa ${easypaisa.number} or ${bank.bankName} account ${bank.accountNumber} (title: ${bank.accountTitle}), then message us on WhatsApp so we can confirm and send a receipt.`,
   },
   {
     question: "Is my donation tax-deductible?",
@@ -12,12 +15,12 @@ export const faqItems = [
   {
     question: "How do I become a volunteer?",
     answer:
-      "Simply reach out to us via WhatsApp or fill out the contact form on this page. Our volunteer coordinator will get in touch with you to discuss opportunities that match your skills and availability.",
+      "Fill in the volunteer form on our Get Involved page. Our team will call you to discuss opportunities that match your skills and availability. Students can apply for an internship on the same page.",
   },
   {
     question: "Where does Karwan-e-Eesaar Welfare Organization operate?",
     answer:
-      "We currently operate in over 50 communities across Punjab, Sindh, and Khyber Pakhtunkhwa provinces of Pakistan.",
+      "We are based on Old College Road, Mansehra, and run drives in surrounding communities, with relief work further afield when disasters strike.",
   },
   {
     question: "How is my donation used?",
@@ -32,55 +35,30 @@ export const faqItems = [
 ] as const;
 
 export const contactDetails = {
-  email: {
-    icon: "Mail" as const,
-    label: "Email Us",
-    value: "info@eesaar.org",
-    href: "mailto:info@eesaar.org",
-  },
   phone: {
     icon: "Phone" as const,
     label: "Call Us",
-    value: "+92 300 1234567",
-    href: "tel:+923001234567",
+    value: siteConfig.contact.phone,
+    href: `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`,
   },
   whatsapp: {
     icon: "MessageCircle" as const,
     label: "WhatsApp",
-    value: "+92 300 1234567",
+    value: siteConfig.contact.phone,
   },
   address: {
     icon: "MapPin" as const,
     label: "Visit Us",
-    value: "123 Main Boulevard, Gulberg III, Lahore, Pakistan",
-    href: "https://maps.google.com/?q=Gulberg+III+Lahore+Pakistan",
+    value: siteConfig.contact.address,
+    href: siteConfig.contact.mapsUrl,
   },
 } as const;
 
+// Add Facebook / YouTube etc. here once real accounts are confirmed
 export const socialLinks = [
   {
-    icon: "Facebook" as const,
-    label: "Facebook",
-    href: "https://facebook.com/eesaarfoundation",
-  },
-  {
     icon: "Instagram" as const,
-    label: "Instagram",
-    href: "https://instagram.com/eesaarfoundation",
-  },
-  {
-    icon: "Twitter" as const,
-    label: "Twitter",
-    href: "https://twitter.com/eesaarfoundation",
-  },
-  {
-    icon: "Linkedin" as const,
-    label: "LinkedIn",
-    href: "https://linkedin.com/company/eesaarfoundation",
-  },
-  {
-    icon: "Youtube" as const,
-    label: "YouTube",
-    href: "https://youtube.com/@eesaarfoundation",
+    label: "@karwan_eesaar",
+    href: siteConfig.social.instagram,
   },
 ] as const;

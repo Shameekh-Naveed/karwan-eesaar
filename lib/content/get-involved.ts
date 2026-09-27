@@ -1,74 +1,46 @@
 export const donateSection = {
   title: "Donate",
-  description:
-    "Your contributions directly fund our programs. Every rupee makes a difference in someone's life.",
-  options: [
-    {
-      title: "One-Time Donation",
-      description: "Make a single contribution to support our ongoing programs and emergency relief efforts.",
-    },
-    {
-      title: "Monthly Giving",
-      description: "Set up a recurring donation to provide sustained support for families in need.",
-    },
-    {
-      title: "Sponsor a Program",
-      description: "Choose a specific program to fund — ration drives, IT classes, eye camps, or winter relief.",
-    },
-  ],
-  paymentMethods: [
-    { name: "Bank Transfer", detail: "Contact us for bank details" },
-    { name: "JazzCash", detail: "Send to our registered number" },
-    { name: "EasyPaisa", detail: "Send to our registered number" },
-  ],
-  transparencyNote:
-    "Karwan-e-Eesaar Welfare Organization is a registered non-profit. We provide donation receipts and maintain full transparency in fund allocation. 85% of donations go directly to program delivery.",
+  description: "Every rupee goes to families in need. Send to either account below.",
 };
 
 export const volunteerSection = {
-  title: "Volunteer With Us",
-  description:
-    "Share your time and skills to make a direct impact. We have opportunities for everyone.",
+  title: "Volunteer with us",
+  description: "Give a few hours. Fill in the form and we'll call you.",
   opportunities: [
-    {
-      title: "IT Instructor",
-      description: "Teach basic computer skills to Huffaz students in our twice-weekly classes.",
-      commitment: "2 sessions/week",
-    },
-    {
-      title: "Event Support",
-      description: "Help organize and execute relief drives, health camps, and community events.",
-      commitment: "As available",
-    },
-    {
-      title: "Field Volunteer",
-      description: "Join our distribution teams for ration drives, winter relief, and emergency response.",
-      commitment: "Monthly drives",
-    },
-    {
-      title: "Digital & Social Media",
-      description: "Help manage our social media, create content, and spread awareness online.",
-      commitment: "Flexible hours",
-    },
+    { title: "Field drives", detail: "Rations, flood relief, winter kits" },
+    { title: "IT instructor", detail: "Teach Huffaz basic computer skills" },
+    { title: "Event support", detail: "Eye camps, blood drives" },
+    { title: "Social media", detail: "Photos, videos, design" },
+  ],
+};
+
+export const internshipSection = {
+  title: "Internships for students",
+  // TODO: add "Experience certificate" once Qazi Hamza confirms interns receive one
+  description: "Real work at a real welfare organization, alongside our team.",
+  perks: [
+    "Hands-on field and digital work",
+    "Flexible hours around classes",
+    "4 weeks to 3 months",
   ],
 };
 
 export const partnerSection = {
-  title: "Partner With Us",
+  title: "Partner with us",
   description:
-    "We welcome partnerships with organizations that share our vision for community welfare.",
+    "Companies, universities and societies: let's run a drive together.",
   types: [
     {
-      title: "Corporate Partnerships",
-      description: "CSR collaborations, employee volunteering programs, and corporate fundraising.",
+      title: "Corporate partnerships",
+      description: "CSR drives, employee volunteering, sponsored programs.",
     },
     {
-      title: "University Collaborations",
-      description: "Student volunteer programs, awareness campaigns, and joint community service projects.",
+      title: "University societies",
+      description: "Joint drives, awareness campaigns, student volunteers.",
     },
     {
-      title: "In-Kind Donations",
-      description: "Donate goods, services, or expertise directly to support our programs and beneficiaries.",
+      title: "In-kind donations",
+      description: "Rations, blankets, uniforms, sewing machines.",
     },
   ],
 };
