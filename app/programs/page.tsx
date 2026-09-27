@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { DonateBand } from "@/components/shared/donate-band";
-import { IconBox, type IconName } from "@/components/shared/icon-box";
-import {
-  programsOverview,
-  programCategories,
-  communityDrivesNote,
-} from "@/lib/content/programs";
+import { ProgramCard } from "@/components/programs/program-card";
+import { programsOverview, programs, communityDrivesNote } from "@/lib/content/programs";
 
 export const metadata: Metadata = {
   title: "Programs",
@@ -18,33 +12,27 @@ export const metadata: Metadata = {
 };
 
 export default function ProgramsPage() {
+  const [first, second, ...rest] = programs;
+
   return (
     <>
       <PageHero title={programsOverview.title} description={programsOverview.subtitle} />
 
       <SectionWrapper className="py-12 md:py-16">
-        <ul className="mx-auto max-w-3xl divide-y divide-border border-y">
-          {programCategories.map((program) => (
-            <li key={program.title}>
-              <Link
-                href={program.href}
-                className="group flex items-center gap-5 py-6 transition-colors hover:bg-muted/60 sm:px-4"
-              >
-                <IconBox icon={program.icon as IconName} size="lg" />
-                <span className="flex-1">
-                  <span className="block text-xl font-bold text-foreground">
-                    {program.title}
-                  </span>
-                  <span className="mt-1 block text-lg text-foreground/75">
-                    {program.description}
-                  </span>
-                </span>
-                <ArrowRight className="size-5 shrink-0 text-secondary transition-transform duration-200 ease-out group-hover:translate-x-1" />
-              </Link>
+        {/* Five cards balanced as two wide over three narrow, so no row has a gap */}
+        <ul className="mx-auto grid max-w-6xl gap-5 md:grid-cols-6">
+          {[first, second].map((program) => (
+            <li key={program.slug} className="md:col-span-3">
+              <ProgramCard program={program} size="large" />
+            </li>
+          ))}
+          {rest.map((program) => (
+            <li key={program.slug} className="md:col-span-2">
+              <ProgramCard program={program} />
             </li>
           ))}
         </ul>
-        <p className="mx-auto mt-8 max-w-3xl text-center text-foreground/75">
+        <p className="mx-auto mt-10 max-w-3xl text-center text-foreground/75">
           {communityDrivesNote}
         </p>
       </SectionWrapper>

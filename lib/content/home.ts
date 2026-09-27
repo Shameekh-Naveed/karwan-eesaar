@@ -20,33 +20,6 @@ export const impactStats = [
   { value: facts.huffazInIT, suffix: "+", label: "Huffaz learning IT skills" },
 ] as const;
 
-export const corePrograms = [
-  {
-    icon: "HandHeart" as const,
-    title: "Emergency relief",
-    description: "Monthly rations, flood and disaster response.",
-    href: "/programs/emergency-relief",
-  },
-  {
-    icon: "GraduationCap" as const,
-    title: "Education",
-    description: "IT classes for Huffaz and school uniforms.",
-    href: "/programs/education",
-  },
-  {
-    icon: "Heart" as const,
-    title: "Healthcare",
-    description: "Free eye camps and blood drives.",
-    href: "/programs/healthcare",
-  },
-  {
-    icon: "Home" as const,
-    title: "Livelihood",
-    description: "Sewing machines so women can earn from home.",
-    href: "/programs/livelihood",
-  },
-] as const;
-
 export const featuredStory = {
   eyebrow: "From the field · 2025",
   title: "After the Battal cloud burst",

@@ -1,39 +1,27 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { IconBox, type IconName } from "@/components/shared/icon-box";
-import { corePrograms } from "@/lib/content/home";
+import { ProgramCard } from "@/components/programs/program-card";
+import { programs } from "@/lib/content/programs";
 
 export function CorePrograms() {
   return (
     <SectionWrapper variant="alt">
       <SectionHeading title="What we do" />
-      <ul className="mx-auto grid max-w-5xl gap-3 sm:grid-cols-2">
-        {corePrograms.map((program) => (
-          <li key={program.title}>
-            <Link
-              href={program.href}
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-secondary/50"
-            >
-              <IconBox icon={program.icon as IconName} />
-              <span className="flex-1">
-                <span className="block text-lg font-bold text-foreground">
-                  {program.title}
-                </span>
-                <span className="block text-muted-foreground">{program.description}</span>
-              </span>
-              <ArrowRight className="size-5 shrink-0 text-secondary transition-transform duration-200 ease-out group-hover:translate-x-1" />
-            </Link>
+      {/* Grid rows stretch and each card is h-full, so every card matches its neighbours */}
+      <ul className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {programs.slice(0, 4).map((program) => (
+          <li key={program.slug}>
+            <ProgramCard program={program} />
           </li>
         ))}
       </ul>
-      <p className="mt-8 text-center">
+      <p className="mt-10 text-center">
         <Link
           href="/programs"
           className="font-semibold text-secondary underline-offset-4 hover:underline"
         >
-          See all programs
+          See all five programs
         </Link>
       </p>
     </SectionWrapper>
