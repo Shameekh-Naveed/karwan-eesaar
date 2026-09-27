@@ -21,8 +21,8 @@ export function MobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="lg:hidden">
-          <Menu className="size-5" />
+        <Button variant="ghost" size="icon" className="size-11 lg:hidden">
+          <Menu className="size-6" />
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
@@ -53,6 +53,17 @@ export function MobileNav() {
               >
                 {item.label}
               </Link>
+              {"children" in item &&
+                item.children.map((child) => (
+                  <Link
+                    key={child.href}
+                    href={child.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md py-2.5 pl-7 pr-3 text-base text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    {child.label}
+                  </Link>
+                ))}
             </div>
           ))}
           <div className="mt-4 border-t pt-4">
