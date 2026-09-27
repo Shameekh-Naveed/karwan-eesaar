@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins, DM_Sans, Geist_Mono } from "next/font/google";
-import { AnnouncementTicker } from "@/components/layout/announcement-ticker";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloat } from "@/components/layout/whatsapp-float";
-import { StickyDonateButton } from "@/components/layout/sticky-donate-button";
+import { MobileDonateBar } from "@/components/layout/mobile-donate-bar";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -103,13 +102,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistMono.variable} antialiased`}>
-        <AnnouncementTicker />
+      <body className={`${geistMono.variable} pb-[72px] antialiased md:pb-0`}>
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
         <WhatsAppFloat />
-        <StickyDonateButton />
+        <MobileDonateBar />
       </body>
     </html>
   );

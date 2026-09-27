@@ -2,22 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Heart, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/lib/content/navigation";
 import { siteConfig } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 import { MobileNav } from "./mobile-nav";
 
 export function Header() {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/85">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          className="flex min-w-0 max-w-[calc(100vw-10rem)] items-center gap-2 sm:max-w-none"
+          className="flex min-w-0 max-w-[calc(100vw-6rem)] items-center gap-2 sm:max-w-none"
         >
           <Image
             src="/eesaar-logo.jpg"
@@ -32,47 +33,19 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-0.5 lg:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => {
-            const hasChildren = "children" in item && item.children;
-
-            if (hasChildren) {
-              return (
-                <div
-                  key={item.href}
-                  className="relative"
-                  onMouseEnter={() => setOpenDropdown(item.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                >
-                  <Link
-                    href={item.href}
-                    className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                    <ChevronDown className="size-3.5" />
-                  </Link>
-                  {openDropdown === item.label && (
-                    <div className="absolute left-0 top-full z-50 min-w-[240px] rounded-xl border bg-card p-2 shadow-lg">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
+            const active =
+              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                  active ? "text-foreground" : "text-muted-foreground"
+                )}
               >
                 {item.label}
               </Link>
@@ -83,11 +56,12 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Button
             asChild
-            className="hidden rounded-xl bg-gold font-bold text-gold-foreground shadow-sm hover:bg-gold/90 lg:inline-flex"
+            variant="donate"
+            className="hidden h-10 rounded-xl px-5 font-bold shadow-sm lg:inline-flex"
           >
             <Link href="/get-involved#donate">
-              <Heart className="mr-1 size-4" />
-              Donate now
+              <Heart className="size-4" />
+              Donate
             </Link>
           </Button>
           <MobileNav />

@@ -9,7 +9,6 @@ export function Footer() {
     footerLinks.about,
     footerLinks.programs,
     footerLinks.getInvolved,
-    footerLinks.legal,
   ];
 
   return (
@@ -21,7 +20,7 @@ export function Footer() {
       </div>
 
       <div className="container relative mx-auto px-4 py-14 md:px-6">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-start gap-3">
@@ -30,7 +29,8 @@ export function Footer() {
                 alt={`${siteConfig.name} logo`}
                 width={40}
                 height={40}
-                className="mt-0.5 h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain"
+                loading="eager"
+                className="mt-0.5 h-10 w-10 shrink-0 rounded-lg bg-card object-contain"
               />
               <span className="font-heading text-lg font-bold leading-snug text-white">
                 {siteConfig.name}

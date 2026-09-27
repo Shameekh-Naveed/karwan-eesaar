@@ -15,7 +15,7 @@ export default function NotFound() {
           404
         </p>
         <h1 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
-          Page Not Found
+          Page not found
         </h1>
         <p className="mx-auto mb-8 max-w-md text-lg text-muted-foreground">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
@@ -25,7 +25,7 @@ export default function NotFound() {
           <Button asChild size="lg" className="h-11 rounded-xl px-6">
             <Link href="/">
               <Home className="mr-1 size-4" />
-              Back to Home
+              Back to home
             </Link>
           </Button>
           <Button
@@ -36,7 +36,7 @@ export default function NotFound() {
           >
             <Link href="/contact">
               <ArrowLeft className="mr-1 size-4" />
-              Contact Us
+              Contact us
             </Link>
           </Button>
         </div>

@@ -49,27 +49,17 @@ export function MobileNav() {
               <Link
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="block rounded-md px-3 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 {item.label}
               </Link>
-              {"children" in item &&
-                item.children?.map((child) => (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-md px-6 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  >
-                    {child.label}
-                  </Link>
-                ))}
             </div>
           ))}
           <div className="mt-4 border-t pt-4">
             <Button
               asChild
-              className="h-11 w-full rounded-xl bg-gold font-bold text-gold-foreground hover:bg-gold/90"
+              variant="donate"
+              className="h-11 w-full rounded-xl font-bold"
             >
               <Link href="/get-involved#donate" onClick={() => setOpen(false)}>
                 <Heart className="mr-1 size-4" />

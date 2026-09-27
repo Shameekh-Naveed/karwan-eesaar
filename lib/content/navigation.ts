@@ -1,66 +1,38 @@
 export const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  {
-    label: "Programs",
-    href: "/programs",
-    children: [
-      { label: "Emergency Relief", href: "/programs/emergency-relief" },
-      { label: "Education & Skills", href: "/programs/education" },
-      { label: "Healthcare", href: "/programs/healthcare" },
-      { label: "Livelihood & Women Empowerment", href: "/programs/livelihood" },
-      { label: "Winter Relief", href: "/programs/winter-relief" },
-    ],
-  },
-  {
-    label: "Get Involved",
-    href: "/get-involved",
-    children: [
-      { label: "Donate", href: "/get-involved#donate" },
-      { label: "Volunteer", href: "/get-involved#volunteer" },
-      { label: "Internships", href: "/get-involved#internship" },
-      { label: "Partner With Us", href: "/get-involved#partner" },
-    ],
-  },
-  { label: "Impact", href: "/impact" },
-  { label: "Blog", href: "/blog" },
+  { label: "Programs", href: "/programs" },
+  { label: "Get Involved", href: "/get-involved" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
+// Add a "Legal" group here once Privacy and Terms pages actually exist
 export const footerLinks = {
   about: {
-    title: "About Us",
+    title: "Organization",
     links: [
-      { label: "Our Story", href: "/about" },
-      { label: "Vision & Mission", href: "/about#vision-mission" },
-      { label: "Our Team", href: "/about#team" },
-      { label: "Our Values", href: "/about#values" },
+      { label: "About us", href: "/about" },
+      { label: "Blog & updates", href: "/blog" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   programs: {
     title: "Programs",
     links: [
-      { label: "Emergency Relief", href: "/programs/emergency-relief" },
-      { label: "Education & Skills", href: "/programs/education" },
+      { label: "Emergency relief", href: "/programs/emergency-relief" },
+      { label: "Education", href: "/programs/education" },
       { label: "Healthcare", href: "/programs/healthcare" },
-      { label: "Livelihood Support", href: "/programs/livelihood" },
-      { label: "Winter Relief", href: "/programs/winter-relief" },
+      { label: "Livelihood", href: "/programs/livelihood" },
+      { label: "Winter relief", href: "/programs/winter-relief" },
     ],
   },
   getInvolved: {
-    title: "Get Involved",
+    title: "Get involved",
     links: [
       { label: "Donate", href: "/get-involved#donate" },
       { label: "Volunteer", href: "/get-involved#volunteer" },
       { label: "Internships", href: "/get-involved#internship" },
-      { label: "Partner With Us", href: "/get-involved#partner" },
-    ],
-  },
-  legal: {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
+      { label: "Partner with us", href: "/get-involved#partner" },
     ],
   },
 } as const;
