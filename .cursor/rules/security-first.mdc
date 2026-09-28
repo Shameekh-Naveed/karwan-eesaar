@@ -1,0 +1,209 @@
+---
+description: CRITICAL — Mandatory security standard for every line of code written or shipped. Always on.
+alwaysApply: true
+---
+
+# CRITICAL: Security Standard — Bulletproof or It Doesn't Ship
+
+**This rule is always on and non-negotiable. It applies to every file, every script, every route,
+every query, every commit — whether written by a human or by an AI agent.**
+
+Why this exists: every item below is a vulnerability class that ships routinely in real codebases —
+cross-user data reads, credentials stored in plaintext, SQL injection, a live token committed to
+git, unauthenticated debug routes, fail-open guards. Every one of them was written by someone who
+thought it was fine. None of them were. **No code that introduces any of these classes may ship.**
+
+This system holds every piece of Stone Systems customer data — contacts, appointments, billing,
+conversations, voice transcripts, generated websites, AI drafts. A leak here is a leak of
+everything.
+
+**Compliance target: SOC 2 (Trust Services Criteria) and ISO 27001 (Annex A controls).** That is
+not a one-time audit — it is a standard the codebase must keep meeting on every new line. You are
+part of the control. Every piece of code you write is reviewed against section 9 below before it
+is considered done, and the bar is the highest grade of security, not "good enough for an internal
+tool."
+
+---
+
+## 1. Secrets NEVER touch code, git, or logs
+
+A secret is any API key, access token, password, webhook secret, encryption key, connection string,
+or `.env` value.
+
+- **Never hardcode a secret in any file.** Not in scripts, not in tests, not in skill/rule files,
+  not "temporarily," not commented out. Git history keeps it forever — once committed, the damage
+  window is unknowable.
+- **Secrets are read from the environment only.** Source of truth is Doppler (project `csp`,
+  configs `dev` / `stg` / `prd`; runbook `docs/SECRETS.md`): laptops and both PM2 apps run through
+  `doppler run`, so no env file is read where `DOPPLER_CONFIG` is set. A gitignored `backend/.env` /
+  `frontend/.env` is only the no-Doppler fallback (names documented in `.env.example`). GitHub
+  Actions secrets for deploys and Supabase Vault for DB-trigger callbacks stay where they are.
+  Never in the repo. Backend code reads them via `ConfigService`, never `process.env`
+  scattered through feature code.
+- **Never commit `.env*` files,** and never paste env values into scripts, docs, commit messages,
+  PR descriptions, or chat. Never `cat`, `echo`, or log an env value — even while debugging.
+- **Never log a secret.** No logging of tokens, keys, auth headers, or full webhook payloads that
+  carry credentials. Mask to the last 4 characters if you must identify one. Production never logs
+  request bodies; don't add code that does.
+- **Found a committed secret?** Stop. Tell the user. It must be ROTATED — deleting the file changes
+  nothing. Record it in `docs/SECURITY_FINDINGS.md`.
+
+## 2. Every query is ownership-scoped
+
+This is a single-company internal platform, not a multi-tenant SaaS — but it is **role-scoped and
+user-scoped**, and the same bug class applies: a route that takes an id from the client and
+fetches or mutates the row with no ownership/role check lets any logged-in CSM read or change any
+other CSM's (or customer's) data.
+
+- **Never fetch or mutate a row by a client-supplied id alone** on user-owned data. Reads,
+  updates, and deletes on CSM-owned rows (`csm_user_id`, `user_id`, `assignee`,
+  `conversation_followers.user_id`, `voice_calls.user_id`, …) must ALSO filter by the caller's
+  identity, or verify ownership of the parent resource first — unless the caller's role legitimately
+  spans all rows (admin/leadership) and the route is gated by `RolesGuard` for that role.
+- **Never trust `csm_user_id` / `user_id` (or any scoping id) sent from the client.** Derive the
+  caller from `request.user` (set by `SupabaseAuthGuard`), then verify the resource belongs to them.
+- **The backend uses the service role and bypasses RLS.** RLS protects the browser path only; on
+  the Nest side, *you* are the policy. Every service-role query on user-owned data must carry the
+  scoping the RLS policy would have applied.
+- **Public token flows** (onboarding form, GMB Fix form, billing update link, sales handoff,
+  photo upload, presentation) must validate the token server-side on every request, check
+  `is_active` / expiry, and only ever expose the one customer the token belongs to.
+- This applies to third-party actions too (IDOR): before calling Stripe, GHL, Twilio, or SignWell
+  on behalf of a customer id, verify the caller may act on that customer.
+- **The two patterns that defeat review:** (a) scoping the FIRST query but not the second query fed
+  by its result, and (b) copying an unscoped procedure as the template for a new one. Check both,
+  every time.
+
+## 3. No route ships without authentication
+
+- **Every new route must declare its auth mechanism** — one of:
+  - `@UseGuards(SupabaseAuthGuard, RolesGuard)` + `@Roles(...)` — staff JWT (or service-role
+    bearer for internal calls)
+  - `@UseGuards(StripeWebhookSignatureGuard)` — Stripe webhooks, raw-body signature check
+  - `@UseGuards(WebhookSecretGuard)` — `x-inbound-secret` = `INBOUND_SECRET` (n8n / Zapier /
+    internal callers)
+  - Provider signature verification inside the handler — Twilio `x-twilio-signature`, Slack
+    signing secret, Fathom/Codegen/Voice-Intelligence shared secrets
+  - Server-side token validation — public customer flows (`onboarding_tokens`,
+    `customer_billing_tokens`, …)
+
+  "None" is not an option. If you can't name which one it is, the route is not done. Browser-side
+  Supabase access relies on RLS — a new table needs its RLS policies in the same migration.
+- **No debug/test/temp endpoints. Ever.** Test locally; never ship a route to production "just to
+  check something." These leak tokens and customer data.
+- **Cron routes** (`POST /cron-*`) are behind `SupabaseAuthGuard` + `RolesGuard`; `@Cron` jobs run
+  in-process. Keep it that way. **Webhook routes verify the provider's signature or shared secret
+  BEFORE reading the payload as truth.**
+- **Revoked/expired credentials must actually stop working.** Check status and expiry on every auth
+  path (`is_active` tokens, GHL OAuth expiry, Supabase session), not just at issuance.
+
+## 4. Fail CLOSED, never open
+
+A guard shaped like `if (secret && provided !== secret) reject` silently turns verification OFF when
+the env var is missing. That is the most common fail-open bug there is.
+
+- Missing secret, missing signature header, missing session → **reject the request.** A misconfigured
+  deploy must produce loud 401/500s, not a silently unprotected endpoint.
+  (`WebhookSecretGuard` does this correctly: `if (!expected || secret !== expected) throw` —
+  copy that shape.)
+- Never wrap an auth or verification failure in a try/catch that lets the request continue.
+- Feature flags like `AI_TASK_DRY_RUN`, `FEATURE_AUTO_SEND`, `AI_AUTOSEND_DRY_RUN` must default
+  to the **safe** value when unset (dry-run on, auto-send off).
+
+## 5. Injection is impossible by construction
+
+- **Use the `@supabase/supabase-js` query builder** (`.from().select().eq()` …). For anything the
+  builder can't express, write a `SECURITY DEFINER` function in a migration and call it via
+  `supabase.rpc(name, params)` — parameters are bound, never interpolated. String concatenation or
+  interpolation of ANY external value into SQL (including inside `plpgsql` via `EXECUTE`) is
+  forbidden. PostgREST filter strings (`.or('…')`, `.filter()`) built from user input are SQL
+  injection's cousin — build them from validated enums only.
+- **Validate all external input at the boundary.** Backend: `class-validator` DTOs on every
+  controller parameter (the global `ValidationPipe` only validates what you declare — an untyped
+  `@Body() body: any` is unvalidated) or a `zod` schema for webhook payloads. Frontend: `zod`
+  schemas with react-hook-form. Request bodies, query params, webhook payloads, uploaded rows,
+  headers. A type cast is not validation.
+- Never build shell commands from user input (`ffmpeg`, `git`, AIVA build steps included). No
+  `eval`, no dynamic imports of user-supplied paths, no rendering user HTML unsanitized (TipTap
+  content, email `html_body`, generated website content).
+
+## 6. Sensitive data at rest and in transit
+
+- **Never store credentials in plaintext columns.** Your own API keys: store a hash, compare hashes.
+  Third-party OAuth tokens (GHL, Gmail refresh tokens, GBP): treat as secrets — service-role only,
+  RLS on, no browser policies, never returned to the client.
+- **CORS:** never reflect the request `Origin` with `credentials: true`. Explicit allowlist only.
+- **Return only the fields the caller needs.** No spreading whole database rows (which may carry
+  `gmail_refresh_token`, `access_token`, `p256dh`/`auth` keys) into API responses or client props.
+  `request.user` already carries `gmail_refresh_token` — never echo it.
+
+## 7. Production writes are auditable
+
+- No destructive database or git commands against **production** without explicit human approval.
+  Staging (Supabase branch `yutdhuaoxjrbkyczzhcy`) is the agent's sandbox: applying committed migrations
+  and creating test data there needs no approval; it is rebuilt from prod weekly. Even on staging,
+  destructive DDL/DML happens only through a committed migration or `ops/db/refresh-staging.sh` —
+  never ad-hoc `DROP`/`TRUNCATE`/un-`WHERE`d statements.
+- Scripts under `backend/scripts/` are NOT committed (owner decision, Michael 2026-09-07: the whole
+  directory is gitignored; never un-ignore it, never `git add -f` a script). Auditability of a
+  production write therefore comes from the run record, not from git: before executing, produce the
+  dry-run report with counts; after executing, log the script name, date, row counts, and the
+  approval in the sprint doc (or `docs/SECURITY_FINDINGS.md` when the write is security-relevant).
+  If you can't point at that record, you can't explain the row later.
+- Follow `.cursor/skills/backend-scripts-safe-runner/SKILL.md`: recon → report → dry-run with
+  counts → explicit approval → execute.
+
+## 8. The findings trail
+
+When you touch security:
+
+- **A security fix without a regression test is not finished.** Backend tests live next to the
+  code as `*.spec.ts` (e.g. `backend/src/modules/tasks/services/tasks.service.spec.ts` for a
+  service-level authz check); frontend tests under `src/**/__tests__/*.test.ts`.
+- **Fixed a finding?** Move it from *Open* to *Remediated* in `docs/SECURITY_FINDINGS.md` with
+  the date, the commit, and before/after proof (the failing request → the 401/403).
+- **Found a new vulnerability while working on something else?** Do NOT silently patch it or ignore
+  it. Add it to `docs/SECURITY_FINDINGS.md` with a severity and a `verified` / `reported` tag, and
+  tell the user.
+
+## 9. SOC 2 / ISO 27001 — you are the control
+
+Auditors need evidence, not vibes. Each item maps to a control family the auditor will test; the
+code has to make the control *true*, and the diff has to make it *provable*.
+
+| Control (SOC 2 TSC / ISO 27001 Annex A) | What it means for the code you write |
+|---|---|
+| **Access control** (CC6.1–6.3 / A.5.15, A.5.18, A.8.2, A.8.3) | Every route names its guard; every role check is `RolesGuard` + `@Roles`, never an ad-hoc `if (user.role === …)`; least privilege — a route open to `csm` never returns admin-only fields; new tables ship RLS in the same migration. |
+| **Authentication & credentials** (CC6.1 / A.5.16, A.5.17, A.8.5) | Tokens validated server-side on every request; expiry and `is_active` enforced; no long-lived credentials minted without an expiry; secrets never in code, git, logs, or chat (section 1). |
+| **Data protection at rest / in transit** (CC6.6–6.7 / A.8.10, A.8.11, A.8.12, A.8.24) | OAuth tokens and keys service-role only, never returned to the browser; PII (phone, email, transcripts, addresses) only in the fields the caller needs; HTTPS/TLS-only integrations; no customer data written to `/tmp`, logs, or third parties not already integrated. |
+| **Logging & monitoring** (CC7.2–7.3 / A.8.15, A.8.16) | Security-relevant actions (auth failures, role denials, token use, destructive writes, AI auto-sends, website deploys) are logged with `requestId` / `userId` and **without** secrets or full payloads; new failure paths raise real errors (Sentry gets 5xx), never swallow. |
+| **Change management** (CC8.1 / A.8.32) | One purpose per change; schema changes are migrations in `frontend/supabase/migrations/` with the schema README updated; no `--no-verify`, no direct prod edits; the reviewer is a fresh context, not the author. |
+| **Secure development** (CC8.1 / A.8.25–A.8.29) | Input validated at the boundary; injection impossible by construction (section 5); dependencies added only when needed and from the existing stack; a security-relevant change carries a regression test. |
+| **Availability & integrity** (A1.2 / A.8.6, A.8.13, A.8.14) | Idempotent webhook and cron handlers; no unbounded queries; expensive work deferred to BullMQ; destructive scripts dry-run first and committed to the repo (section 7). |
+| **Incident & vulnerability management** (CC7.4–7.5 / A.5.24–A.5.28, A.8.8) | Anything you find goes into `docs/SECURITY_FINDINGS.md` with severity and a `verified` / `reported` tag; fixes are logged with before/after proof (section 8); committed secrets get rotated, not deleted. |
+| **Third-party / supplier** (CC9.2 / A.5.19–A.5.23) | New external services go through an injectable shared service with its own env var names documented in `.env.example`; webhook inputs are verified by signature or shared secret before trust. |
+
+**Mandatory compliance self-review — every time you write or change code, before you say it is
+done:** walk the table above row by row against the diff and state, explicitly, which rows the
+change touches and how each is satisfied (one line per touched row is enough; "n/a" is fine for
+rows the change genuinely doesn't touch). If a row is touched and you cannot show it is satisfied,
+the code is not done. This review happens *in addition to* the fresh-context review in
+`production-code-review.mdc`, which re-checks the same rows independently.
+
+## Pre-ship security checklist — run it on EVERY change
+
+- [ ] No secret, token, or env value anywhere in the diff
+- [ ] Every new/changed query on user-owned data is scoped to the caller (or role-gated)
+- [ ] Every new/changed route has a named auth mechanism and fails closed
+- [ ] New tables ship with RLS enabled and policies in the same migration
+- [ ] All external input is validated at the boundary (DTO / zod)
+- [ ] No string-built SQL / PostgREST filters, shell commands, or unsanitized HTML
+- [ ] No secrets or full credential-bearing payloads in logs
+- [ ] Security-relevant change carries a regression test and updates `docs/SECURITY_FINDINGS.md`
+- [ ] SOC 2 / ISO 27001 self-review (section 9) written out for the touched control rows
+
+## When in doubt
+
+If you are not sure whether something is a vulnerability, treat it as one. Stop, say so, and ask.
+A 10-minute question is free. A breach costs the company its customers, its SOC 2 / ISO 27001
+standing, and its reputation — permanently.

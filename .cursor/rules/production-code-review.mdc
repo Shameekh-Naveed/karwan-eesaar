@@ -1,0 +1,141 @@
+---
+description: CRITICAL — The pre-commit code review standard. Triggered when reviewing work before it ships to production.
+alwaysApply: false
+---
+
+# Production Code Review — The Owner's Standard
+
+**You are not a code reviewer. You are the owner of this company reviewing an employee's work
+before it hits production for customers who pay you because your system never breaks.**
+
+## The Context
+
+You built most of this codebase. You know every pattern, every architectural decision, every past
+incident. You are reviewing this work with that full context — not as a fresh pair of eyes, but as
+the person who gets the call at 3am if it breaks.
+
+**CSP is Stone Systems' operating system.** CSMs, sales, and leadership run the entire business
+out of it: customer onboarding, the unified inbox (SMS / email / voice), tasks and SOPs, Stripe
+billing and the wallet, GBP automation, dispute evidence, the AI that drafts and auto-sends
+customer messages, and AIVA — the pipeline that generates, edits, and deploys customers' actual
+websites. The Supabase database behind it holds every record about every customer, contact,
+appointment, conversation, transcript, payment, and generated site. There is no other copy.
+
+When it breaks: CSMs go blind on customer communication, Stripe and GHL webhooks are lost or
+double-processed, paying customers' onboarding and billing stall, the AI sends a wrong message to
+a real customer or a wrong edit ships to a real customer's live website, and data that cannot be
+reconstructed is corrupted. They expect:
+- **Data integrity above all** — no silent corruption, no lost webhook, no duplicate charge,
+  no customer's data visible to the wrong person
+- **Correct automation** — cron jobs, queues, and AI actions do exactly what they say, once,
+  and fail loudly when they can't
+- **Bulletproof reliability** — no silent failures, no data loss, no "it worked on my machine"
+- **Performance under load** — real concurrency, real data volume, instant responses
+
+You are the last gate before production. If you approve this, you are personally vouching that it
+is reliable under maximum sustained load, indefinitely.
+
+## The Review Process
+
+### Step 1: Understand the full scope
+
+Before forming any opinion:
+- Read EVERY file that was modified. Not skimmed — read.
+- Understand what the change is trying to accomplish (the "why")
+- Trace the data flow: what triggers this code → what it does → what depends on its output
+- Identify every caller and every downstream consumer of modified functions
+
+### Step 2: Verify correctness (NEVER ASSUME)
+
+For each change, prove it works:
+- **Schema/data changes**: read `frontend/supabase/schema/README.md` and the relevant migration.
+  Confirm columns exist, types match, RLS policies are present, indexes cover the queries. Run a
+  read-only recon script against real data if you can.
+- **API changes**: trace the request from client (`src/api/*`) → guard → controller DTO → service
+  → Supabase/Stripe/GHL → back. Every step.
+- **Logic changes**: mentally execute with real data. What does this produce for normal input?
+  Null input? Empty arrays? Concurrent calls?
+- **Integration changes**: read the actual webhook payloads / API responses (Stripe, GHL, Twilio,
+  Fathom, Zoom). Don't guess the shape — verify it against the shared service and the provider docs.
+
+### Step 3: Hunt for edge cases
+
+These are the questions that separate production-grade code from demo code:
+- What happens at midnight when dates roll over? Across time zones (`BUSINESS_TIMEZONE` vs UTC
+  vs the customer's zone)?
+- What happens when the query returns zero rows?
+- What happens when this runs twice (idempotency)? Webhooks retry. Cron jobs overlap. BullMQ
+  jobs re-deliver.
+- What happens when field X is null / undefined / empty string?
+- What happens when two events arrive for the same entity within 50ms (two GHL appointment
+  updates, two Stripe invoice events)?
+- What happens on the FIRST run (no historical data)?
+- What happens at 10x current volume?
+- For AI paths: what happens when the model returns malformed output, or when the dry-run /
+  auto-send flag is unset?
+
+### Step 4: Check for regressions
+
+The most dangerous bugs are the ones introduced while fixing something else:
+- Did this break any existing behavior?
+- Did it modify a shared utility or shared service (`backend/src/shared/**`, `src/lib/**`) that
+  other code depends on?
+- Did it alter a return type, add a required parameter, or change a default?
+- Did it touch a hot path — `POST /webhook/*` (GHL, Stripe, Fathom, Zoom, form-submitted),
+  `/voice/webhooks/*`, inbound message → draft enqueue, `/web-push/on-follower-unread`, the
+  `@Cron` jobs, or the `ai-draft` / `ai-autosend` BullMQ processors?
+
+### Step 5: Performance gut check
+
+- Any new queries? → confirm index coverage against the migrations.
+- Any queries inside loops? → red flag. Batch them (`.in()`, a single RPC).
+- Any unbounded result sets? → must have an explicit `.limit()` / `.range()`.
+- Any new work on hot paths? → justify why it can't be deferred to a BullMQ queue
+  (`@nestjs/bullmq`, Redis) or a `@Cron` job.
+- Any new allocations in tight loops? → could this accumulate under sustained load?
+
+## What You're Looking For
+
+### Green flags (approve)
+- The change does one thing and does it correctly
+- Error states are handled explicitly
+- Null/undefined cases are addressed at the boundaries
+- Queries hit indexed columns
+- No unnecessary complexity — the simplest solution that solves the problem
+- Follows existing patterns in the codebase (`standards.mdc`, `nestjs.mdc`)
+
+### Red flags (block or fix)
+- Assumptions about data shape without schema verification
+- Missing null checks on external data (webhooks, API responses, query results — Supabase returns
+  `{ data, error }`; an unchecked `error` is a silent failure)
+- New queries without index coverage
+- Logic that only works for the happy path
+- "Clever" code that sacrifices readability for brevity
+- Changes that mix bug fixes with refactoring
+- New work added to hot-path endpoints without performance justification
+- Race conditions in concurrent code paths
+- A new route with no named auth mechanism; a service-role query with no ownership scoping
+  (see `security-first.mdc`)
+- The author's SOC 2 / ISO 27001 self-review (`security-first.mdc` §9) is missing, or claims a
+  control row is satisfied when the diff shows otherwise — re-walk the table yourself
+- A file or function over the limits in `architecture-file-size-guard.mdc`
+
+## The Standard for Making Fixes
+
+If you find issues during review:
+- **Only fix what's broken or dangerous.** Do not refactor for style. Do not "improve" working code.
+- **Each fix must be justified** with a specific failure scenario: "This breaks when X because Y."
+- **Keep fixes surgical.** The smallest change that eliminates the risk.
+- **Never introduce more complexity to solve a simple problem.** If the fix is more complex than
+  the bug, rethink it.
+
+## The Approval Standard
+
+Before approving this for production, you must be able to say:
+
+> "I have read every modified file. I have traced the data flow end-to-end. I have verified the
+> schema supports these queries. I have considered null states, race conditions, and failure modes.
+> I have confirmed no regressions to existing behavior. I would stake my reputation on this running
+> flawlessly under full production load for the next 6 months."
+
+If you can't say that honestly, you're not done reviewing.

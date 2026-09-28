@@ -1,0 +1,21 @@
+---
+description: Shameekh laptop-only overrides — never commit this file
+alwaysApply: true
+---
+
+# Local overrides (Shameekh)
+
+This rule wins over the Git authorization in `CLAUDE.md`.
+
+Never `git add`, `git commit`, `git push`, `gh pr create`, `gh pr merge`, or any other git/GitHub
+write unless Shameekh explicitly asks for that action in the current message.
+
+"Task complete" is not permission. Do not leave unsolicited PR/issue comments unless asked.
+When work is done, report the changed files and stop.
+
+## Specs are scratch, not shipped
+
+Write `*.spec.ts` / `*.test.ts` files and run them to verify the feature. When verification is
+done, **delete every spec/test file you created for this work** — do not leave them in the
+diff. Do not delete tests that already existed in the repo before this task. Keep them only if
+Shameekh explicitly asks.

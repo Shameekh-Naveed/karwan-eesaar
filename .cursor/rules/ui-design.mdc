@@ -1,0 +1,81 @@
+---
+description: UI quality bar for the staff app — nesting, journeys, tokens, accessibility, review loop
+globs: frontend/src/**/*.tsx
+alwaysApply: false
+---
+
+# UI design (staff app)
+
+Read before touching any `.tsx` under `frontend/src/`. The full brief is `DESIGN.md` at the repo
+root; example designs are in `docs/design/references/`. This file is the enforceable checklist.
+
+## The bar
+
+You are the lead UI engineer at Apple presenting this screen to the entire company; your career
+depends on it. Would you present it? Every review pass answers that in writing. If the answer
+needs a "but", the screen is not done.
+
+Michael's four non-negotiables (`DESIGN.md`, "The feel"): self-explanatory without text; strictly
+minimal (unnecessary ⇒ gone); no duplicates and no excess tabs/buttons/sections; anyone can
+understand it first try.
+
+## Before building
+
+1. Read `DESIGN.md`, `docs/design/references/README.md`, and the relevant routes in
+   `docs/design/screenshots/INDEX.md` (every route, every role — what exists today, and what
+   should go). For customer-facing routes
+   (`/onboarding`, `/gmb-fix`, `/upload-media`, `/welcome`, `/launch-call`, `/sales/*` checkout)
+   read `PRODUCT.md` as well — for staff routes `PRODUCT.md` does NOT apply.
+2. Name the user story this change serves (role, entry, actions, exit). If you cannot, it is a
+   product question, not a design choice.
+3. Find the in-repo precedent for every element you add (grep `frontend/src/components/` for the
+   primitive or pattern). Match it. Diverge only with a written reason in the sprint doc's
+   `## Design decisions`.
+4. Screenshot the touched routes BEFORE editing (light + dark) so the review has a baseline.
+
+## While building
+
+- Only tokens from `frontend/src/app.css` and primitives from `frontend/src/components/ui/`. No new
+  colours, fonts, radii, or shadows. No hand-rolled controls that a primitive already provides.
+- One primary action per view. Detail one click deeper. No inline expansion of more than one row.
+  No more than four peer cards before it becomes a list/table with a detail pane.
+- Every screen has an explicit entry and exit (breadcrumb, back, or done-returns-home).
+- Every async action has visible feedback: optimistic state or spinner, then a `sonner` toast.
+- Empty, loading, and error states are written and styled (`Skeleton`, `Alert`, one-line empty
+  state naming the next action).
+- Destructive actions go through `AlertDialog` and say what happens.
+- Accessibility floor: 4.5:1 contrast in both themes, focus rings kept, accessible names on
+  icon-only controls, keyboard reachable, no colour-only meaning.
+- Size limits from `.cursor/rules/components.mdc` still apply; decompose before adding behaviour.
+- Desktop only for staff routes (1440×900 reference). Do not build or grade phone layouts except
+  the Inbox PWA. Customer-facing public routes are mobile-first (see `PRODUCT.md`).
+
+## After building (the loop — minimum three passes)
+
+Each pass: screenshot (light + dark, empty + long content, hover + focus) → review → fix →
+re-screenshot. Exit only when ALL hold:
+
+- No High findings from the `apple-design` review (`.cursor/skills/apple-design/SKILL.md`).
+- No open nesting-rule or journey-rule violation from `DESIGN.md`.
+- The design reviewer answers "passes the Apple bar: yes" in writing — meaning they would
+  present it to all of Apple with their career on the line.
+- The journey reviewer completes the user story cold, without instructions or reading any help
+  text.
+- The subtraction pass found nothing left to remove: no duplicate item, no unnecessary tab,
+  button, section, label, or explanatory text.
+- The `apple-design` skill's Design Review output is pasted (summary + findings) into the sprint
+  doc — a review that is not recorded did not happen.
+
+Fixes are expressed through this repo's tokens. The reviewers find problems; they do not restyle
+the app.
+
+## Michael's sign-off
+
+The reviewers gate the loop, not the merge. Every UI change ends with a `👀 EYEBALL FOR Michael`
+entry in the sprint doc (routes + screenshot paths, light + dark) and stays unmerged until he has
+looked. Never merge a UI change on the reviewers' verdict alone.
+
+## Record
+
+Write every non-obvious choice to the sprint doc's `## Design decisions` (what, why, which
+reference or precedent). The Final A-Z pass copies it into `DESIGN.md`'s log.

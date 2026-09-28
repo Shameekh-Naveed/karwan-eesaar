@@ -1,0 +1,31 @@
+---
+description: Frontend structure guardrails for file placement, route location, and anti-pattern prevention; use when adding or moving files under frontend.
+globs: frontend/**/*
+alwaysApply: false
+---
+
+# Directory structure
+
+## Map
+
+| Path | Purpose |
+|---|-----|
+| `src/pages/` | Route-level screens only. One file per route; route definitions live in `src/App.tsx`. |
+| `src/components/` | UI components. Subfolders: `ui/` (base primitives, shadcn-style), `shared/` (cross-feature), `admin/`, `customer/`, `dashboard/`, `leadership/`, `onboarding/`, `aiva/` (website builder sessions/blog), `gsc/` (Search Console analytics — not AIVA). |
+| `src/api/` | Supabase, Stripe, GHL client and API helpers. `supabaseApi.ts`, `stripeApi.ts`, `ghlApi.ts`, etc. |
+| `src/hooks/` | React hooks for data and behavior (e.g. `useData.ts`, `useCustomers.ts`, `useDebounce.ts`). |
+| `src/contexts/` | React context (e.g. `AuthContext.tsx`). |
+| `src/providers/` | App-level providers (e.g. `QueryProvider.tsx`). |
+| `src/lib/` | Supabase client, shared utils, transformers. `supabase.ts`, `utils.ts`, `transformers.ts`, `storage.ts`. |
+| `src/utils/` | Domain helpers (e.g. `vaTaskDueDate.ts`, `autoTaskGeneration.ts`). |
+| `src/types/` | Shared TypeScript types. Single entry `index.ts` or organized by domain. |
+| `src/data/` | Static or mock data (e.g. `templates.ts`, `mockData.ts`, `users.ts`). |
+| `supabase/functions/` | Edge Functions. One folder per function; `index.ts` as entry. |
+| `supabase/migrations/` | Schema migrations. Timestamped `.sql` files. |
+
+## Anti-patterns
+
+- **Do not** create top-level `features/`, `services/`, or `actions/` folders. API and business logic live in `src/api/`, `src/utils/`, `src/hooks/`.
+- **Do not** put API or data-fetching logic in `src/pages/` or inside component files. Use `src/api/` and `src/hooks/`.
+- **Do not** add ad-hoc “utils” files outside `src/lib/` or `src/utils/`. Prefer existing modules; if new, place by scope (generic → `lib/`, domain → `utils/`).
+- **Do not** add route definitions anywhere other than `src/App.tsx` (wouter `Route` / `Switch`).

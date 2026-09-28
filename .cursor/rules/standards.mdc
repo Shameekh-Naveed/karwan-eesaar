@@ -1,0 +1,43 @@
+---
+description: Project constitution and tech guardrails — agentic protocol, stack rules, and available automations
+alwaysApply: true
+---
+
+# Standards
+
+## Agentic protocol
+
+- **Search before creating**: Keep the codebase modular—do not duplicate utilities, helpers, or parallel abstractions. **Frontend** (`frontend/**`): search existing implementations (e.g. `src/lib/`, `src/utils/`, `src/components/shared/`, `src/api/`) before adding new ones. **Backend** (`backend/**`): before implementing anything new, check whether an existing module, service, controller pattern, guard, interceptor, or shared utility already covers part of the need—especially under `backend/src/shared/**` and related feature modules in `backend/src/modules/**`.
+- **Plan before coding**: For non-trivial changes, outline steps or confirm approach before writing code. Do not assume patterns that are not present in the repo.
+- **No assumptions**: Infer from code and docs only. Do not invent environment variable names, API shapes, or integration URLs. When unsure, ask or search `docs/` and `ai-docs/`.
+- **Backend skill requirement**: For any work in `backend/**`, first read and follow `.cursor/rules/nestjs.mdc`.
+
+## Frontend (`frontend/**`)
+
+- **TypeScript**: Use strict mode. At minimum preserve `strictNullChecks: true`; aim for full `strict` in tsconfig. No `any` without justification.
+- **Framework**: **Vite + wouter** only. No Next.js or App Router. Routes are defined in `src/App.tsx`; there is no `app/` directory.
+- **Styling**: Tailwind via existing patterns and design tokens. Entry: `src/main.css` (Tailwind 4 with `@tailwindcss/vite`). Do not introduce new global CSS or alternate styling systems without alignment.
+- **Client integration boundaries**: Browser calls Supabase via `src/lib/supabase.ts` and project API wrappers (e.g. `src/api/supabaseApi.ts`, `src/api/stripeApi.ts`, `src/api/ghlApi.ts`). Do not introduce Next.js API routes or React `use server` actions.
+- **API callers**: All outbound calls are organized in `src/api/` as **namespaced const objects** (`export const fooApi = { ... }`). Two transport layers: **`cspGetJson`/`cspPostJson`/`cspPutJson`** (from `src/api/cspClient.ts`) for Nest backend endpoints with auto-attached Supabase JWT, and the **`supabase` client** for direct PostgREST/RPC. New API functions belong in `src/api/`—do not add raw `fetch` or `supabase.from` calls inside components or pages. Search existing `src/api/` modules before creating new ones; extend an existing `fooApi` object when the domain fits.
+- **React Query (TanStack Query v5)**: Server/async state uses `@tanstack/react-query`. Provider is `src/providers/QueryProvider.tsx` (defaults: `staleTime 30s`, `gcTime 5min`, `retry 1`, `refetchOnWindowFocus false`). Conventions:
+  - **Custom hooks in `src/hooks/`**: Wrap `useQuery`/`useMutation` in named hooks (e.g. `useCustomers`, `useUpdateBusinessDetails`). Prefer adding to an existing hook file over creating a new one when the domain matches. Avoid inline `useQuery`/`useMutation` in components—extract to hooks.
+  - **Query keys**: Tuple arrays `['resource', ...params]`. Use key factories for domains with multiple related keys (see `src/lib/queryKeys/stripe.ts` for the pattern). Do not introduce duplicate keys that collide with existing ones—search first.
+  - **Mutations & invalidation**: `useMutation` with `onSuccess` → `queryClient.invalidateQueries({ queryKey })`. Invalidate all related keys (e.g. both `['customers']` and `['customer', id]` after a customer write). Do not call API functions imperatively and then `invalidateQueries` outside a `useMutation`—wrap the call in `mutationFn` instead.
+  - **Query functions**: `queryFn` should call `src/api/` modules, not raw `fetch` or direct `supabase` queries.
+
+## Backend (`backend/**`)
+
+- **Reuse before new code**: Before adding a new module, service method, DTO, pipe, guard, or helper, search the backend for something that already does part of the job. Prefer extending an existing module or calling a shared service over introducing parallel types or duplicate integration code.
+- **Framework**: NestJS (Fastify adapter) with module/service/controller architecture. Follow established shared-service patterns in `backend/src/shared/**`.
+- **TypeScript**: Keep strict typing (`backend/tsconfig.json` is strict); avoid `any` unless justified.
+- **Integration boundaries**: Implement new business logic in backend modules first. Use shared backend services for external integrations (Stripe/GHL/n8n/Supabase), not ad-hoc controller-level calls.
+- **Outbound API callers**: All external HTTP goes through **injectable services**, never controllers. Shared clients exist in `src/shared/services/` for Stripe (`stripe.service.ts`), GHL (`ghl.service.ts`), n8n (`n8n.service.ts`), Twilio (`twilio-client.service.ts`), Gmail (`gmail-send-client.service.ts`), Slack (`slack-notification.service.ts`), Google Auth (`google-auth/google-auth.service.ts`), and Supabase (`supabase.service.ts`). Before adding raw `fetch` in a feature service, check whether a shared service already wraps that API—extend it if close. New integrations get their own shared service. Use `ConfigService` for all API keys/URLs; never hardcode secrets or base URLs. `fetch` is the HTTP primitive (no axios). Error handling: throw on failure for request-critical calls; log + return `null` only for best-effort side effects (notifications, analytics).
+- **Migration direction**: Legacy Supabase Edge Functions still exist under `frontend/supabase/functions/`. Prefer moving logic into `backend/src/modules/` and keep **`ai-docs/ARCHITECTURE.md`** (bridge) plus **`ai-docs/ARCHITECTURE_BACKEND.md`** / **`ai-docs/ARCHITECTURE_FRONTEND.md`** in sync when migration status changes.
+
+## Available automations
+
+- **GHL onboarding**: Launch Call Invite, No-Show detection, Onboarding Form webhooks — see `docs/GHL_AUTOMATION_SETUP.md`.
+- **n8n unified comms**: Real-time inbound SMS (**Twilio Webhook: Inbound Message**) and email (**Gmail: New Email**) in n8n → Supabase; outbound send and per-contact sync via Nest — see `docs/UNIFIED_COMMUNICATIONS_SETUP.md`.
+- **Sync**: Cron-triggered sync for SMS and Gmail conversations — see `docs/CURL_SYNC_EXAMPLES.md`.
+
+Do not introduce ad-hoc webhook URLs or new integration entry points without updating the relevant `docs/` runbook and the appropriate **`ai-docs/`** architecture file (`ARCHITECTURE.md` bridge, plus `ARCHITECTURE_BACKEND.md` or `ARCHITECTURE_FRONTEND.md` depending on where the entry point lives).

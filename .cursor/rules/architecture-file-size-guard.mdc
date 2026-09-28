@@ -1,0 +1,80 @@
+---
+description: File/function size and decomposition limits. Never make a large file larger. Always on.
+alwaysApply: true
+---
+
+# File Size & Architecture Guard
+
+## Hard Limits
+
+- **No single file should exceed 800 lines of code.** If a file is approaching this limit, stop
+  and decompose before adding more code.
+- **No single function/method should exceed 150 lines.** Break large functions into smaller,
+  well-named helpers.
+- **No function should accept more than 8 parameters.** Use an options/config object instead.
+- Frontend components have **stricter** limits that still apply on top of these — see
+  `components.mdc` (page/shell < 250 lines, feature components < 200).
+
+## When Building New Features
+
+1. **Scaffold the file structure first,** before writing implementation. Decide which modules will
+   exist and what each is responsible for. Backend: one Nest module per domain
+   (`backend/src/modules/<domain>/{controllers,services,dtos}`), shared clients in
+   `backend/src/shared/services/`. Frontend: types → `src/api/` caller → `src/hooks/` → page →
+   components (see `directory-structure.mdc` and the `new-feature` skill).
+2. **One file = one responsibility.** If you're about to add a function that doesn't directly
+   relate to the file's core purpose, it belongs in a new file.
+3. **Extract, don't append.** If an existing file is already large (500+ lines), extract related
+   logic into a new module rather than adding to it.
+
+## When Modifying Existing Large Files
+
+These legacy files are already far over the limit (line counts as of 2026-08-27):
+
+- `backend/src/modules/disputes/services/disputes.service.ts` (5957)
+- `frontend/src/api/supabaseApi.ts` (5735)
+- `backend/src/modules/gbp/services/gmb-optimization-automation.service.ts` (5293)
+- `frontend/src/components/sales-checkout/SalesCheckoutPageContent.tsx` (4094)
+- `backend/src/modules/aiva/services/aiva-update-orchestrator.service.ts` (2871)
+- `frontend/src/pages/Inbox.tsx` (2769)
+- `backend/src/modules/commission/services/commission.service.ts` (2763)
+- `frontend/src/pages/OnboardingPresentation.tsx` (2495)
+- `frontend/src/pages/DisputeProgressPage.tsx` (2417)
+- `frontend/src/pages/ChurnDashboard.tsx` (2359)
+- `backend/src/modules/voice/voice.service.ts` (2346)
+- `backend/src/modules/gbp/services/gbp.service.ts` (2271)
+- `backend/src/modules/disputes/services/dispute-service-delivery-proof.service.ts` (2267)
+- `backend/src/modules/stripe/services/stripe-query.service.ts` (2190)
+- `backend/src/modules/webhooks/services/webhooks-customer.service.ts` (2068)
+- `backend/src/shared/services/ghl.service.ts` (2033)
+- `backend/src/modules/ai-assistant/services/ai-assistant.service.ts` (1968)
+- `backend/src/modules/aiva/services/aiva-content-generator.service.ts` (1953)
+- `frontend/src/pages/OnboardingForm.tsx` (1875)
+- `backend/src/modules/webhooks/services/webhooks-appointment.service.ts` (1868)
+- `frontend/src/components/customer/CustomerRevenueTab.tsx` (1855)
+- `backend/src/modules/ai-assistant/services/ai-draft.service.ts` (1598)
+- `backend/src/modules/ai-assistant/services/ai-draft-task.service.ts` (1551)
+
+…plus roughly 60 more between 800 and 1500 lines. Do NOT attempt a big-bang refactor. Instead:
+
+1. **Never make a large file larger.** Any new logic goes in a new file that the large file imports.
+   New `supabaseApi` functions go in a new `src/api/<domain>Api.ts` (the `fooApi` const-object
+   pattern from `standards.mdc`), not appended to `supabaseApi.ts`. New Nest logic goes in a new
+   service in the same module, injected into the existing one.
+2. **Bug fixes stay surgical.** When fixing a bug in a large file, ONLY fix the bug. Do not
+   refactor, extract, or restructure anything else in the same change. One change, one purpose.
+3. **Extraction is a separate, deliberate task.** Only extract into new modules when explicitly
+   asked to, or when building a brand new feature that naturally belongs in its own file. Never
+   combine extraction with a bug fix or any other change.
+4. **Always verify parity** after an extraction: behavior must be identical before and after.
+
+## Decomposition Patterns
+
+- **Grouping/aggregation logic** → one file per entity type
+- **Filtering logic** → a generic, shared filter module (not N copies for N entity types)
+- **Normalization/resolution** → standalone utility modules (`backend/src/shared/utils/`,
+  `frontend/src/lib/`)
+- **Types and interfaces** → a dedicated types file per domain
+- **Orchestration** → a thin orchestrator that imports and composes the pieces
+- **External HTTP** → an injectable shared service in `backend/src/shared/services/`, never inline
+  `fetch` in a feature service or controller

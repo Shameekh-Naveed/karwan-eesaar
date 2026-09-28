@@ -1,0 +1,48 @@
+---
+description: Supabase migration files — how a version is minted (never typed), why a name is frozen once applied to staging, and how to fix a clash or a bad rename without breaking the deploy guards.
+globs: frontend/supabase/migrations/**
+---
+# Migrations — versions are minted, never typed
+
+The 14-digit prefix of `frontend/supabase/migrations/<version>_<name>.sql` is the primary key of
+`supabase_migrations.schema_migrations` on staging and prod. Every deploy guard (stage and prod)
+refuses a duplicate version and refuses a history version that has no local file. Three incidents
+in September 2026 came from the same habit: agents on parallel branches hand-typed the same round
+timestamp (`20260920000000`, `20260920010000`, `20260920020000`), and one file was renamed after
+staging had already applied it.
+
+## Rules
+
+1. **Mint, don't type.** `cd frontend && npm run db:new -- <snake_name>` creates the file. The version
+   is the real UTC second plus "sand": a random 1–59 s nudge whenever that second is already used on
+   any `origin/*` branch or open PR (or lands on a round number). Never create the file by hand,
+   never copy a neighbour's timestamp and edit a digit, never use `…HH0000`.
+2. **The pre-commit hook and the PR check run the same guard** (`frontend/scripts/migration-guard.mjs`):
+   a NEW file must parse as `<14 digits>_<snake>.sql`, must not be rounded, must not duplicate a
+   version in the directory, and must not reuse a version that another ref (main, staging, the PR
+   base, any other open PR) already holds under a different name. `npm run db:guard -- --base origin/staging`
+   runs it by hand.
+3. **A name freezes the moment it is applied anywhere.** After `npm run db:push` (staging) or a merge
+   that deployed it, the filename is history. Renaming it makes the next staging or prod deploy fail
+   with `Remote migration <old> has no local file`. A rename is only allowed while the file exists
+   on this branch alone and was never pushed to a database — that is exactly the collision fix.
+4. **Fixing a clash** (two PRs, same version): re-mint the file that has NOT been applied to staging
+   (`npm run db:new -- <name>`, move the SQL, `git rm` the old). If both were pushed to staging, one
+   history row must be repaired (below) — never rename the applied one.
+5. **Fixing a bad rename** (applied under the old version, file now carries the new one): do NOT
+   rename back if the new version already shipped to prod. Repair the history on the database that
+   holds the old version (staging: `npm run db:link && npx supabase migration repair --status reverted <old> && npx supabase migration repair --status applied <new>`;
+   prod: Michael, from the SQL editor or the same CLI). The Supabase CLI's own hint — "repair
+   reverted + db pull" — is WRONG here: the SQL already ran.
+6. **Before opening a PR with a migration**, glance at the other open PRs' migration filenames
+   (`gh pr list --state open` → the guard does this for you in CI). After a version reaches prod via
+   `main`, merge `main → staging` before the next staging push (see `ai-docs/DATABASE_SCHEMA.md`).
+7. **Never edit an applied migration's SQL**; ship a new one. New tables ship RLS in the same file
+   (`security-first.mdc`); the schema README is updated in the same PR.
+
+## Why sand and not just seconds
+
+Two people minting in the same UTC second is unlikely; two people typing `…000000` in the same hour
+was routine. The real second removes the routine case; the random nudge on a visible collision
+removes the unlikely one. The guards exist because a version that slipped through costs a broken
+stage deploy, a repair on a live database, and a promotion blocked for everyone.

@@ -1,0 +1,28 @@
+---
+description: Component standards for frontend components folder
+globs: frontend/src/components/**/*
+alwaysApply: false
+---
+
+# Components
+
+## Line limits
+
+- **Page/shell components**: Prefer &lt; 250 lines. When over, split into smaller sections or move sections into `src/components/shared/` or feature subfolders.
+- **Feature components** (tabs, dialogs, list views): Prefer &lt; 200 lines. Over → extract sub-components or a hook for state/logic.
+- **Presentational pieces**: Prefer &lt; 150 lines. Over → split into smaller presentational components or move to shared.
+
+When a file exceeds the limit, decompose before adding more behavior.
+
+## Decomposition decision tree
+
+- **Logic reused in 2+ components** → Extract to `src/hooks/` (e.g. `useData.ts`, `useDebounce.ts`).
+- **Self-contained UI block with clear boundary** → Sub-component in same file, or in `src/components/shared/` if reused across features.
+- **New route/screen** → New file in `src/pages/` and route in `src/App.tsx`.
+- **Form or state-heavy dialog** → Consider a custom hook for form/state and a smaller presentational component that receives props and callbacks.
+
+## Conventions
+
+- Use `@/` for imports (e.g. `@/components/ui/button`, `@/api/supabaseApi`).
+- Prefer existing primitives in `src/components/ui/` (button, dialog, form, input, etc.). Do not duplicate or reinvent.
+- Colocate component-specific types in the same file unless they are shared; shared types go in `src/types/`.

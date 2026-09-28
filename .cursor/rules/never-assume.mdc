@@ -1,0 +1,137 @@
+---
+description: CRITICAL — Verification-before-action standard. Never assume a schema, payload shape, return type, or file path you can verify. Always on.
+alwaysApply: true
+---
+
+## Compliance Signal
+
+You MUST begin every response with a random emoji. This is a compliance signal that confirms
+you have loaded and acknowledged this rule. If the emoji is missing, the user knows the rules
+were not loaded.
+
+# ABSOLUTE RULE: NEVER ASSUME — VERIFY EVERYTHING
+
+**This is the single most important rule in this project. It overrides all other priorities
+except "don't break production." No deadline, no convenience, no "I'm pretty sure" justifies
+skipping verification. If you violate this rule, the code you produce is worthless.**
+
+## The Core Principle
+
+**You do not know anything until you have verified it.** Your training data is stale. Your
+"intuition" about this codebase is pattern-matching that produces confident-sounding garbage.
+Every time you think "I'm pretty sure this field exists" or "this probably works like X," you
+are about to write a bug.
+
+The antidote is simple: **look before you leap.** You have access to the codebase, the schema,
+the logs, and the user. Use them.
+
+## This repo's verification tools
+
+| Need | Use |
+|---|---|
+| **Schema source of truth** | `frontend/supabase/schema/README.md` (tables, triggers, RPCs) + the timestamped migrations in `frontend/supabase/migrations/` + RPC bodies in `frontend/supabase/rpc/`. App-side types: `frontend/src/types/index.ts`. Overview: `ai-docs/DATABASE_SCHEMA.md`. |
+| **Live DB inspection** | No DB MCP is configured. Write a throwaway `.mjs` in `backend/scripts/` (`recon-*.mjs` pattern) that imports `agentQuery` / `withAgentDb` from `backend/scripts/lib/agent-db.mjs` — a **read-only** Postgres client using the `agent_ro` role (`AGENT_RO_DATABASE_URL`, SELECT-only, session pooler). Run it from `backend/` with `node scripts/<name>.mjs`. The service-role key is NOT for recon; it is used only by the Nest process and by write scripts Michael has explicitly approved after a dry run. Follow `.cursor/skills/backend-scripts-safe-runner/SKILL.md`: **never print env values, never write without explicit approval.** |
+| **Runtime / production logs** | Grafana + Loki via `.cursor/skills/grafana-log-investigator/SKILL.md` (`https://logs.stonesystems.io`, label `job=csp-backend`, `| json` for fields, correlate on `requestId` / `syntheticRequestId`). Sentry receives 5xx only. Runbook: `ai-docs/GRAFANA_LOGGING.md`. Local dev logs: `backend/logs/app-YYYY-MM-DD.log`. |
+| **Code search** | Grep / Glob / ripgrep over `backend/src/**` and `frontend/src/**`; read the actual file, never reconstruct from memory. Architecture maps: `ai-docs/ARCHITECTURE.md`, `ai-docs/ARCHITECTURE_BACKEND.md`, `ai-docs/ARCHITECTURE_FRONTEND.md`. |
+| **Throwaway verification script** | ESM `.mjs` under `backend/scripts/`, run with `node` from `backend/` (or `npx ts-node` for TS). Backend unit tests are `*.spec.ts` run with `npx jest`. |
+| **Third-party integrations** | Stripe, GoHighLevel (GHL), Twilio (SMS + Voice + Voice Intelligence), Supabase (Auth/Postgres/Storage/Edge Functions), n8n, Zapier, SignWell, Fathom, Zoom, Slack, Notion, Google (Sheets/Drive/Gmail/Workspace/Places/Business Profile), Anthropic, OpenAI, Vertex/Gemini, Cursor SDK, Codegen, Bunny CDN, Cloudflare, GitHub, SignalHouse, Remove.bg, ClickUp, web-push/VAPID. Read the shared client in `backend/src/shared/services/` first, then the provider's current docs, then ask. |
+
+## What Counts as an Assumption
+
+If you are doing ANY of the following, you are assuming. Stop immediately and verify:
+
+- **Guessing a database column name, type, or whether it exists** → read
+  `frontend/supabase/schema/README.md` and the migration that created it, or inspect the live
+  schema with a read-only recon script
+- **Guessing what data looks like** (values, nullability, formats, enums) → run a real read-only
+  query via a recon script and pull sample rows
+- **Guessing how an API endpoint behaves** → read the actual Nest controller + service (or the
+  Edge Function under `frontend/supabase/functions/`). Don't guess the request/response shape.
+- **Guessing the deployment state or environment config** → check Grafana/Loki logs; env var
+  *names* are in `backend/.env.example` / `frontend/.env.example` (never read or print values)
+- **Guessing whether a function exists or what it returns** → search the codebase and read the
+  actual implementation
+- **Guessing the cause of a bug** → pull the logs, query for the real data, read the code path.
+  Diagnose from evidence, not from theories.
+- **Guessing how a third-party integration works** → read the shared service in
+  `backend/src/shared/services/` (e.g. `stripe.service.ts`, `ghl.service.ts`,
+  `twilio-client.service.ts`), then the provider's current docs, then ask the user
+- **Guessing a file path, import path, or module structure** → find the actual file
+- **Guessing whether an index exists for a query** → read the migration that created the table /
+  index and confirm; RLS policies live in the migrations too
+
+## The Verification Hierarchy
+
+When you encounter something you don't know, follow this order:
+
+### 1. Check the codebase (fastest, always available)
+- `frontend/supabase/schema/README.md` + `frontend/supabase/migrations/` for schema, indexes,
+  RLS, relations, RPCs
+- Grep / Glob for functions, types, constants, patterns
+- Read the actual source file — never reconstruct code from memory
+
+### 2. Check the data (for data questions)
+- Read-only recon script (`backend/scripts/recon-*.mjs` using `lib/agent-db.mjs`) → inspect real
+  rows, counts, edge cases, nullability
+- Same script → verify table structure and index coverage (`information_schema`, `pg_indexes`,
+  `pg_policies` — plain SQL works, it is a Postgres connection)
+- You are ENCOURAGED to write and run diagnostic read-only queries. This is not a waste of
+  time — it prevents bugs. Writes require explicit approval, always.
+
+### 3. Check runtime & logs (for behavior questions)
+- Grafana/Loki (`grafana-log-investigator` skill) → recent errors, real production behavior,
+  cron job outcomes, webhook traces by `requestId`
+
+### 4. Check with a script (for complex verification)
+- You are allowed and ENCOURAGED to write a quick throwaway `.mjs` script under
+  `backend/scripts/` to confirm a hypothesis before writing production code
+- This is faster than shipping a bug and debugging it later
+
+### 5. Ask the user (when tools can't answer)
+- If the codebase, the data, and the logs don't have the answer, **ASK**
+- Do NOT fill in the blanks with your best guess
+- A question that takes 10 seconds to ask saves hours of debugging a wrong assumption
+- Frame it specifically: "I need to know X because it affects Y. Is it A or B?" — never a vague
+  "what should I do?"
+
+## Assumption-Driven Bugs (the classic shapes)
+
+| What was assumed | What was real | The consequence |
+|---|---|---|
+| "This column probably accepts nulls" | Column has a NOT NULL constraint | Insert failures in production |
+| "This field is a string" | Field is a JSON object | Silent data corruption |
+| "This endpoint returns an array" | It returns a paginated wrapper | Code only processes the first page |
+| "This query will hit an index" | No index covers the WHERE clause | Database CPU pegged at 100% |
+| "This feature flag is enabled" | Flag was off for certain tiers | Broken experience for paying users |
+| "This webhook sends field X" | Payload shape varies by event type | Null reference errors |
+| "GHL / Stripe returns this shape" | API version differs (e.g. Stripe Basil moved `current_period_*` to line items) | Wrong billing data shown to CSMs |
+
+## Behavioral Requirements
+
+### When writing code
+- Before writing a query: **read the schema first** to confirm names, types, indexes, and RLS
+- Before calling a function: **read its implementation** to see what it actually returns
+- Before modifying a file: **read the file first** to understand its current state
+- Before adding an import: **verify the export exists** in the source module
+- Before inventing an env var, API shape, or integration URL: **don't** — search `docs/`,
+  `ai-docs/`, and `.env.example` first (see `standards.mdc`)
+
+### When debugging
+- Before proposing a fix: **reproduce the issue with real data** from the DB or the logs
+- Before saying "the bug is X": **show the evidence** — the log line, the query result, the code path
+- Never say "this should fix it" — say "this fixes the specific issue because [evidence]"
+
+### When uncertain
+- Say "I'm not sure about X — let me check," then actually check
+- If you catch yourself writing "probably," "likely," "should be," "I think," or "I believe" —
+  that is a red flag. Stop and verify.
+- It is ALWAYS better to ask a "dumb" question than to silently ship a wrong assumption
+
+## The Bottom Line
+
+**The AI that verifies is 10x more valuable than the AI that guesses confidently.**
+
+Every tool call to check a schema, query the data, read a file, or pull logs is an investment in
+correctness. Skipping verification to "save time" is how production incidents happen.
+
+**Verify. Verify. Verify. When in doubt, verify again.**
