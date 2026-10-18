@@ -13,7 +13,15 @@ interface PhotoFrameProps {
   priority?: boolean;
   /** Placeholder styling for navy sections */
   onDark?: boolean;
+  /** Which part of the photo to keep when the frame crops it (faces are usually near the top) */
+  position?: "top" | "center" | "bottom";
 }
+
+const positionClass = {
+  top: "object-top",
+  center: "object-center",
+  bottom: "object-bottom",
+} as const;
 
 /**
  * A photo slot. Shows the real photo once public/photos/<slot>.jpg exists;
@@ -27,13 +35,21 @@ export function PhotoFrame({
   sizes = "100vw",
   priority,
   onDark,
+  position = "center",
 }: PhotoFrameProps) {
   const src = findPhoto(slot);
 
   return (
     <div className={cn("relative overflow-hidden rounded-3xl", className)}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={cn("object-cover", positionClass[position])}
+        />
       ) : (
         <div
           role="img"
@@ -46,8 +62,13 @@ export function PhotoFrame({
           )}
         >
           <Camera className="size-7" strokeWidth={1.5} />
-          <p className="max-w-[28ch] text-sm font-medium leading-snug">{alt}</p>
-          <p className="text-xs opacity-80">photos/{slot}.jpg</p>
+          {/* The file-name hint is for the team while building; visitors only see a quiet frame */}
+          {process.env.NODE_ENV !== "production" && (
+            <>
+              <p className="max-w-[28ch] text-sm font-medium leading-snug">{alt}</p>
+              <p className="text-xs opacity-80">photos/{slot}.jpg</p>
+            </>
+          )}
         </div>
       )}
     </div>

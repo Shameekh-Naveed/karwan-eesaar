@@ -27,6 +27,7 @@ export function TimelineSection() {
               <PhotoFrame
                 slot={`year-${year.year}`}
                 alt={year.photoAlt}
+                position={year.photoPosition}
                 className="aspect-[16/10] rounded-none"
                 sizes="(min-width: 768px) 33vw, 100vw"
               />

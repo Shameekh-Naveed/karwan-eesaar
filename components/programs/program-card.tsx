@@ -26,6 +26,7 @@ export function ProgramCard({ program, size = "default", className }: ProgramCar
       <PhotoFrame
         slot={`program-${program.slug}`}
         alt={program.photoAlt}
+        position={program.photoPosition}
         className={cn("rounded-none", large ? "aspect-[16/9]" : "aspect-[4/3]")}
         sizes={large ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"}
       />

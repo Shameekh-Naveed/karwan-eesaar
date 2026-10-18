@@ -13,6 +13,9 @@ export interface Initiative {
   points?: readonly string[];
   /** Headline figure shown as a pill, e.g. "500+ families" */
   stat?: string;
+  /** Describes the photo in public/photos/program-<slug>-<n>.jpg; say what and when, never guess */
+  photoAlt?: string;
+  photoPosition?: "top" | "center" | "bottom";
 }
 
 export interface Program {
@@ -22,6 +25,7 @@ export interface Program {
   /** Shown on cards and under the page title */
   tagline: string;
   photoAlt: string;
+  photoPosition?: "top" | "center" | "bottom";
   highlights: readonly Highlight[];
   initiatives: readonly Initiative[];
   ctaLabel: string;
@@ -42,7 +46,8 @@ export const programs: readonly Program[] = [
     icon: "HandHeart",
     title: "Emergency relief",
     tagline: "Monthly rations, plus fast help when floods and disasters strike.",
-    photoAlt: "Volunteers handing out ration packs",
+    photoAlt: "Ration packs lined up under the Karwan-e-Eesaar banner, ready for distribution",
+    photoPosition: "bottom",
     highlights: [
       { value: `${facts.rationFamiliesMonthly}+`, label: "families get rations every month" },
       { value: `${facts.floodFamilies2022}+`, label: "families helped in the 2022 floods" },
@@ -52,12 +57,15 @@ export const programs: readonly Program[] = [
       {
         title: "Monthly ration drive",
         stat: `${facts.rationFamiliesMonthly}+ families a month`,
+        photoAlt: "Rows of monthly ration packs: flour, pulses, oil and spices, packed for each family",
         summary: "Widows, orphans and families in need receive a ration pack every month.",
         points: ["Flour, rice, oil, lentils, sugar and tea", "Sponsor one family or give to the fund"],
       },
       {
         title: "Flood & disaster response",
         stat: `${facts.floodFamilies2022}+ families in 2022`,
+        photoAlt: "A pickup loaded with blankets and bedding leaving for the 2022 flood victims",
+        photoPosition: "bottom",
         summary: "When floods hit Punjab and Sindh in 2022, our volunteers brought food, clothes and supplies.",
         points: [
           `2025 Battal cloud burst: ${facts.battalFamilies2025}+ families`,
@@ -67,6 +75,7 @@ export const programs: readonly Program[] = [
       {
         title: "Qurbani meat distribution",
         stat: "Every Eid-ul-Adha",
+        photoAlt: "Qurbani meat portioned into bags for families, Eid-ul-Adha 2025",
         summary: "Donors can give their Qurbani through us so families in need share in Eid.",
       },
       {
@@ -84,7 +93,7 @@ export const programs: readonly Program[] = [
     icon: "GraduationCap",
     title: "Education & skills",
     tagline: "IT classes for Huffaz, Taekwondo training and school uniforms.",
-    photoAlt: "Huffaz students in an IT class",
+    photoAlt: "Schoolboys lined up in the new sweaters and caps from our December 2023 uniform drive",
     highlights: [
       { value: `${facts.huffazInIT}+`, label: "Huffaz learning IT skills" },
       { value: "2×", label: "IT classes every week" },
@@ -105,6 +114,7 @@ export const programs: readonly Program[] = [
       {
         title: "School uniform drive",
         stat: "Multiple phases done",
+        photoAlt: "Boys holding their new uniform bags in the school yard, December 2024",
         summary: "Students at government primary schools get what they need to attend with dignity.",
         points: ["Sweaters, socks, caps and shoes"],
       },
@@ -118,7 +128,7 @@ export const programs: readonly Program[] = [
     icon: "Heart",
     title: "Healthcare",
     tagline: "Free eye camps and blood donation drives.",
-    photoAlt: "Patients being examined at a free eye camp",
+    photoAlt: "Doctors examining patients in a packed hall at the June 2025 free eye camp",
     highlights: [
       { value: `${facts.eyeCampPatients}+`, label: "patients treated at eye camps" },
       { value: `${facts.bloodDonorsOneDay}`, label: "blood donors in one day" },
@@ -128,6 +138,8 @@ export const programs: readonly Program[] = [
       {
         title: "Free eye camps",
         stat: `${facts.eyeCampPatients}+ patients`,
+        photoAlt: "Women choosing their free spectacles at the June 2025 eye camp",
+        photoPosition: "top",
         summary: "Two-day camps with specialists from Sheikhupura: check-ups, treatment and referrals.",
         points: ["Held in 2024 and 2025", "More areas planned; follow us for dates"],
       },
@@ -176,7 +188,7 @@ export const programs: readonly Program[] = [
     icon: "Shield",
     title: "Winter relief",
     tagline: "Blankets and warm clothes for children and the elderly.",
-    photoAlt: "Children receiving blankets and warm clothes",
+    photoAlt: "Schoolchildren holding the warm sweaters we handed out in December 2023",
     highlights: [
       { value: "SOS", label: "Children's Village partner" },
       { value: "2", label: "groups reached: children and elders" },

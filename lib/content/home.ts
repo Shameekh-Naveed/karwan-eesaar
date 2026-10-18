@@ -21,10 +21,15 @@ export const impactStats = [
 ] as const;
 
 export const featuredStory = {
-  eyebrow: "From the field · 2025",
-  title: "After the Battal cloud burst",
-  body: `When a cloud burst swept through Battal, our volunteers brought blankets, crockery and household essentials to ${facts.battalFamilies2025}+ families who had lost almost everything.`,
-  href: "/blog/cloud-burst-response-battal-2025",
+  eyebrow: "From the field · Eye camps",
+  title: "Free eye camps, 2024 and 2025",
+  body: `Specialists from Sheikhupura join our volunteers in Mansehra for two-day camps: eye tests, spectacles and medicines, all free. ${facts.eyeCampPatients}+ patients were treated at the 2024 camp alone.`,
+  href: "/blog/eye-camp-200-patients-2024",
+  photos: {
+    main: "Doctors examining patients at the August 2024 eye camp",
+    second: "A girl having her eyes tested at the June 2025 camp",
+    third: "Women choosing their free spectacles, June 2025",
+  },
 };
 
 export const waysToHelp = {

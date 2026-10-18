@@ -12,19 +12,21 @@ export function FeaturedStory() {
         <div className="grid grid-cols-2 gap-3">
           <PhotoFrame
             slot="home-story"
-            alt="Volunteers delivering relief in Battal after the cloud burst"
+            alt={featuredStory.photos.main}
             className="col-span-2 aspect-[16/10]"
             sizes="(min-width: 1024px) 55vw, 100vw"
           />
           <PhotoFrame
             slot="home-story-2"
-            alt="Blankets and household items being unloaded"
+            alt={featuredStory.photos.second}
+            position="top"
             className="aspect-square rounded-2xl"
             sizes="(min-width: 1024px) 27vw, 50vw"
           />
           <PhotoFrame
             slot="home-story-3"
-            alt="A family receiving relief supplies"
+            alt={featuredStory.photos.third}
+            position="top"
             className="aspect-square rounded-2xl"
             sizes="(min-width: 1024px) 27vw, 50vw"
           />

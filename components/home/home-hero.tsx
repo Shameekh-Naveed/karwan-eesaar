@@ -40,7 +40,7 @@ export function HomeHero() {
 
         <PhotoFrame
           slot="home-hero"
-          alt="A volunteer handing a ration pack to a family"
+          alt="A volunteer handing a new sweater to a schoolboy at our December 2023 uniform drive"
           className="aspect-[4/3] w-full lg:aspect-[4/5]"
           sizes="(min-width: 1024px) 45vw, 100vw"
           priority

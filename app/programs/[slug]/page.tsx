@@ -7,6 +7,7 @@ import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { DonateBand } from "@/components/shared/donate-band";
 import { PhotoFrame } from "@/components/shared/photo-frame";
 import { IconBox } from "@/components/shared/icon-box";
+import { findPhoto } from "@/lib/photos/find-photo";
 import { getProgram, programs } from "@/lib/content/programs";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +43,7 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
           <PhotoFrame
             slot={`program-${program.slug}`}
             alt={program.photoAlt}
+            position={program.photoPosition}
             className="aspect-[16/9] md:aspect-[21/9]"
             sizes="(min-width: 1024px) 64rem, 100vw"
             priority
@@ -70,18 +72,25 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
           What we do
         </h2>
         <ol className="mx-auto max-w-5xl space-y-14 md:space-y-20">
-          {program.initiatives.map((initiative, index) => (
+          {program.initiatives.map((initiative, index) => {
+            const slot = `program-${program.slug}-${index + 1}`;
+            // Initiatives without a photo yet read as a plain text block instead of an empty frame
+            const hasPhoto = Boolean(findPhoto(slot));
+            return (
             <li
               key={initiative.title}
-              className="grid items-center gap-6 md:grid-cols-2 md:gap-12"
+              className={cn("grid items-center gap-6 md:gap-12", hasPhoto && "md:grid-cols-2")}
             >
-              <PhotoFrame
-                slot={`program-${program.slug}-${index + 1}`}
-                alt={`${initiative.title}: photo from the drive`}
-                className={cn("aspect-[4/3]", index % 2 === 1 && "md:order-2")}
-                sizes="(min-width: 768px) 40vw, 100vw"
-              />
-              <div>
+              {hasPhoto && (
+                <PhotoFrame
+                  slot={slot}
+                  alt={initiative.photoAlt ?? `${initiative.title}: photo from the drive`}
+                  position={initiative.photoPosition}
+                  className={cn("aspect-[4/3]", index % 2 === 1 && "md:order-2")}
+                  sizes="(min-width: 768px) 40vw, 100vw"
+                />
+              )}
+              <div className={cn(!hasPhoto && "mx-auto max-w-2xl border-l-4 border-secondary/40 pl-6")}>
                 {initiative.stat && (
                   <p className="inline-block rounded-full bg-secondary/10 px-3 py-1 text-sm font-semibold text-secondary">
                     {initiative.stat}
@@ -107,7 +116,8 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
                 )}
               </div>
             </li>
-          ))}
+            );
+          })}
         </ol>
       </SectionWrapper>
 
