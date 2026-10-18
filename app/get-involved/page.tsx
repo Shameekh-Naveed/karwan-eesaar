@@ -5,6 +5,7 @@ import { WhatsAppIcon } from "@/components/layout/whatsapp-float";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { PhotoFrame } from "@/components/shared/photo-frame";
 import { DonationDetails } from "@/components/get-involved/donation-details";
 import { LeadForm } from "@/components/forms/lead-form";
 import { getWhatsAppLink } from "@/lib/site-config";
@@ -43,12 +44,20 @@ export default function GetInvolvedPage() {
       {/* Volunteer */}
       <SectionWrapper variant="alt" id="volunteer" className="scroll-mt-20">
         <div className="mx-auto grid max-w-5xl items-start gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16">
-          <SectionHeading
-            align="left"
-            title={volunteerSection.title}
-            subtitle={volunteerSection.description}
-            className="mb-0"
-          />
+          <div>
+            <SectionHeading
+              align="left"
+              title={volunteerSection.title}
+              subtitle={volunteerSection.description}
+              className="mb-6"
+            />
+            <PhotoFrame
+              slot="volunteers"
+              alt="Karwan-e-Eesaar volunteers in their vests before a drive"
+              className="aspect-[4/3]"
+              sizes="(min-width: 1024px) 35vw, 100vw"
+            />
+          </div>
           <LeadForm formId="volunteer" />
         </div>
       </SectionWrapper>

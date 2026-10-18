@@ -41,8 +41,8 @@ export function OurStory() {
 
         <PhotoFrame
           slot="about-story"
-          alt="Karwan-e-Eesaar volunteers at a ration drive in Mansehra"
-          className="aspect-[4/3] md:order-first md:aspect-square"
+          alt="Karwan-e-Eesaar volunteers lined up in their vests before the 2024 eye camp"
+          className="aspect-[4/3] md:order-first"
           sizes="(min-width: 768px) 45vw, 100vw"
         />
       </div>

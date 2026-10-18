@@ -1,6 +1,20 @@
-export const blogPosts = [
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  tag: string;
+  content: string;
+  /** Photo slot: public/photos/<photo>.jpg. Every post shows a real photo. */
+  photo: string;
+  photoAlt: string;
+}
+
+export const blogPosts: readonly BlogPost[] = [
   {
     slug: "cloud-burst-response-battal-2025",
+    photo: "blog-cloud-burst-response-battal-2025",
+    photoAlt: "Volunteers sorting donated clothes and relief bundles in a hall",
     title: "Cloud Burst Response in Battal",
     excerpt:
       "Karwan-e-Eesaar Welfare Organization responded swiftly to the 2025 cloud burst in Battal, supporting 10+ affected families with essential household items.",
@@ -11,6 +25,8 @@ export const blogPosts = [
   },
   {
     slug: "eye-camp-200-patients-2024",
+    photo: "blog-eye-camp-200-patients-2024",
+    photoAlt: "Doctors examining patients at the August 2024 free eye camp",
     title: "Eye Camp Serves 200+ Patients",
     excerpt:
       "A two-day free eye camp brought specialist teams from Sheikhupura, treating over 200 patients with comprehensive eye care.",
@@ -21,6 +37,8 @@ export const blogPosts = [
   },
   {
     slug: "winter-drive-sos-children-2024",
+    photo: "blog-winter-drive-sos-children-2024",
+    photoAlt: "Schoolchildren holding the warm sweaters we handed out in winter",
     title: "Winter Drive for SOS Children",
     excerpt:
       "Blankets, warm clothes, and essentials distributed to children at SOS Village and local old age homes.",
@@ -31,6 +49,8 @@ export const blogPosts = [
   },
   {
     slug: "ramadan-blood-donation-2024",
+    photo: "blog-ramadan-blood-donation-2024",
+    photoAlt: "Karwan-e-Eesaar volunteers lined up in their vests at the mosque hall",
     title: "Ramadan Blood Donation Camp Success",
     excerpt:
       "50 donors stepped forward at our mosque-based Ramadan blood drive, contributing to saving countless lives.",
@@ -41,6 +61,8 @@ export const blogPosts = [
   },
   {
     slug: "importance-of-sadaqah",
+    photo: "blog-importance-of-sadaqah",
+    photoAlt: "Sorted ration packs ready to go to families",
     title: "The Power of Sadaqah: Why Every Contribution Matters",
     excerpt:
       "In Islam, Sadaqah is more than charity — it's a spiritual practice that purifies wealth and strengthens communities.",
@@ -51,6 +73,8 @@ export const blogPosts = [
   },
   {
     slug: "uniform-distribution-2023",
+    photo: "blog-uniform-distribution-2023",
+    photoAlt: "Schoolchildren queuing for their new sweaters, December 2023",
     title: "School Uniform Drive Transforms Student Confidence",
     excerpt:
       "Government primary school students received sweaters, socks, caps, and shoes in our latest uniform distribution phase.",
@@ -59,4 +83,4 @@ export const blogPosts = [
     content:
       "Our latest uniform distribution drive equipped students at local government primary schools with sweaters, warm socks, caps, and shoes. The impact goes beyond clothing — students attend school more regularly and with greater confidence when they have proper uniforms and essentials.",
   },
-] as const;
+];

@@ -10,6 +10,8 @@
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-mono: var(--font-geist-mono);
+  --font-urdu: var(--font-urdu);
+  --font-arabic: var(--font-arabic);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,6 +45,7 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-sand: var(--sand);
   --color-brand-sky: var(--brand-sky);
+  --color-navy-deep: var(--navy-deep);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -62,6 +65,8 @@
   --gold-foreground: oklch(0.24 0.08 268);
   --sand: oklch(0.86 0.05 80);
   --brand-sky: oklch(0.70 0.12 225);
+  /* Darker than primary, for the closing band so it reads as an ending before the footer */
+  --navy-deep: oklch(0.21 0.075 268);
 
   --background: oklch(0.982 0.014 85);
   --foreground: oklch(0.22 0.06 268);
