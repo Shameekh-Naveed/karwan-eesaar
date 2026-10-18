@@ -31,7 +31,6 @@ export const footerLinks = {
       { label: "Emergency relief", href: "/programs/emergency-relief" },
       { label: "Education", href: "/programs/education" },
       { label: "Healthcare", href: "/programs/healthcare" },
-      { label: "Livelihood", href: "/programs/livelihood" },
       { label: "Winter relief", href: "/programs/winter-relief" },
     ],
   },

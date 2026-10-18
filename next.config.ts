@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     return [
       // Impact was merged into About (timeline) and Home (stats)
       { source: "/impact", destination: "/about#our-work", permanent: true },
+      // Livelihood was retired as a program until there is real work (and photos) to show
+      { source: "/programs/livelihood", destination: "/programs", permanent: true },
     ];
   },
 };

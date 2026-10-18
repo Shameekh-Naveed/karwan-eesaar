@@ -9,10 +9,9 @@ to see what goes where. Current slots:
 
 | File name                | Where it shows                                   |
 | ------------------------ | ------------------------------------------------ |
-| `home-hero`              | Home, next to the main headline                  |
-| `home-story`             | Home, featured story (main photo)                |
-| `home-story-2`           | Home, featured story (small)                     |
-| `home-story-3`           | Home, featured story (small)                     |
+| `home-hero`              | Home, the tall photo in the hero mosaic          |
+| `home-mosaic-2`          | Home, top small photo in the hero mosaic         |
+| `home-mosaic-3`          | Home, bottom small photo in the hero mosaic      |
 | `about-story`            | About, "Our story"                               |
 | `year-2025`              | About, 2025 on the timeline                      |
 | `year-2024`              | About, 2024 on the timeline                      |
@@ -23,11 +22,9 @@ to see what goes where. Current slots:
 | `blog-<post-slug>`       | Blog list card and top of that post              |
 | `volunteers`             | Get Involved, next to the volunteer form         |
 
-Program slugs: `emergency-relief`, `education`, `healthcare`, `livelihood`,
-`winter-relief`.
+Program slugs: `emergency-relief`, `education`, `healthcare`, `winter-relief`.
 
 Still empty (no photo of this activity yet):
-`program-livelihood`, `program-livelihood-1`, `program-livelihood-2`,
 `program-emergency-relief-4` (meals for patients' families),
 `program-education-1` (IT classes), `program-education-2` (Taekwondo),
 `program-healthcare-2` (blood donation), `program-healthcare-3` (emergency ward),

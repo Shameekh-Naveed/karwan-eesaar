@@ -34,7 +34,7 @@ export interface Program {
 
 export const programsOverview = {
   title: "Our programs",
-  subtitle: "Five ways we reach families in need.",
+  subtitle: "Four ways we reach families in need.",
 };
 
 export const communityDrivesNote =
@@ -156,32 +156,6 @@ export const programs: readonly Program[] = [
     ],
     ctaLabel: "Support healthcare",
     seoDescription: "Free eye camps, blood donation drives and emergency ward support.",
-  },
-  {
-    slug: "livelihood",
-    icon: "Home",
-    title: "Livelihood & women",
-    tagline: "Sewing machines and skills so women can earn from home.",
-    photoAlt: "A woman working at a donated sewing machine",
-    highlights: [
-      { value: `${facts.sewingMachines2025}`, label: "sewing machines donated in 2025" },
-      { value: "Rs 15–25k", label: "sponsors one machine" },
-    ],
-    initiatives: [
-      {
-        title: "Sewing machine program",
-        stat: `${facts.sewingMachines2025} machines in 2025`,
-        summary: "Women receive a sewing machine and run small tailoring work from home.",
-        points: ["One machine costs about Rs 15,000 to 25,000", "Sponsor a machine or give to the fund"],
-      },
-      {
-        title: "Skills training",
-        stat: "Planned",
-        summary: "We plan to add tailoring and handicraft courses so more women can earn.",
-      },
-    ],
-    ctaLabel: "Sponsor a machine",
-    seoDescription: "Sewing machine donations and skills training so women can earn from home.",
   },
   {
     slug: "winter-relief",
