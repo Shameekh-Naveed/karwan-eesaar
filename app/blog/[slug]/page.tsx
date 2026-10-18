@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SectionWrapper } from "@/components/shared/section-wrapper";
 import { DonateBand } from "@/components/shared/donate-band";
+import { PhotoFrame } from "@/components/shared/photo-frame";
 import { blogPosts } from "@/lib/content/blog";
 
 interface BlogPostPageProps {
@@ -63,6 +64,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
             {post.excerpt}
           </p>
+
+          <PhotoFrame
+            slot={post.photo}
+            alt={post.photoAlt}
+            className="mb-8 aspect-[16/10]"
+            sizes="(min-width: 768px) 768px, 100vw"
+            priority
+          />
 
           <div className="prose prose-lg max-w-none">
             <p className="text-lg leading-relaxed text-foreground/85">
