@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, DM_Sans, Geist_Mono } from "next/font/google";
+import { Poppins, DM_Sans, Geist_Mono, Noto_Nastaliq_Urdu, Amiri } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloat } from "@/components/layout/whatsapp-float";
@@ -24,6 +24,21 @@ const dmSans = DM_Sans({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// The organization's name in Urdu, and the ayah and hadith on the home page
+const nastaliq = Noto_Nastaliq_Urdu({
+  subsets: ["arabic"],
+  weight: ["400", "600"],
+  variable: "--font-urdu",
+  display: "swap",
+});
+
+const amiri = Amiri({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-arabic",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -71,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${dmSans.variable} ${nastaliq.variable} ${amiri.variable}`}>
       <head>
         <script
           type="application/ld+json"

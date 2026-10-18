@@ -1,37 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Building2, Check, Copy, Smartphone } from "lucide-react";
+import { Building2, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-float";
 import { facts, formatPkr, pendingFacts } from "@/lib/content/facts";
 import { siteConfig, getWhatsAppLink } from "@/lib/site-config";
-
-function CopyButton({ value, label }: { value: string; label: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard can be blocked (old browsers, insecure context); the number stays selectable
-    }
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-primary-foreground/25 px-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
-      aria-label={`Copy ${label}`}
-    >
-      {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-      <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
-    </button>
-  );
-}
 
 interface Line {
   label: string;
