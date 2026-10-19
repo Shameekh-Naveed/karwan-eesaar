@@ -3,7 +3,8 @@ export const siteConfig = {
   tagline: "Serving Humanity, Creating Impact",
   description:
     "Karwan-e-Eesaar Welfare Organization is a Mansehra-based charity providing monthly rations, education, healthcare, and emergency relief to families in need across Pakistan.",
-  url: "https://eesaar.org",
+  // Set NEXT_PUBLIC_SITE_URL in Vercel if the live domain differs from this default
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://eesaar.org",
   whatsapp: {
     number: "923440992830",
     donateMessage:
@@ -39,6 +40,9 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/karwan_eesaar/",
   },
 } as const;
+
+/** Origin with no trailing slash, for canonical, Open Graph and sitemap URLs. */
+export const siteUrl = siteConfig.url.replace(/\/$/, "");
 
 export function getWhatsAppLink(
   type: "donate" | "volunteer" | "general" = "general"
