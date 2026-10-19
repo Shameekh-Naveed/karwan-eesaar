@@ -43,6 +43,8 @@ const amiri = Amiri({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  // "./" resolves to each page's own URL, so every page gets its own canonical
+  alternates: { canonical: "./" },
   title: {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
@@ -64,7 +66,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteConfig.url,
+    url: "./",
     siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
