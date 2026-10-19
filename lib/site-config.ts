@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     "Karwan-e-Eesaar Welfare Organization is a Mansehra-based charity providing monthly rations, education, healthcare, and emergency relief to families in need across Pakistan.",
   // Set NEXT_PUBLIC_SITE_URL in Vercel if the live domain differs from this default
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://eesaar.org",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.karwaneesaar.com",
   whatsapp: {
     number: "923440992830",
     donateMessage:
